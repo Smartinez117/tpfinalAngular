@@ -16,6 +16,7 @@ export class DocenteComponent implements OnInit {
   docentes: Docente[] = []; // Para almacenar todos los docentes
   docente!: Docente; // Para almacenar un docente específico
   errorMessage: string = ''; // Para manejar errores
+  docenteId:number =0;
 
   //guardar un nuevo docente.
   nuevoDocente: Docente = { legajo: 0, nombre: '',cursos:[] }; // Inicializa el objeto docente
@@ -69,5 +70,24 @@ export class DocenteComponent implements OnInit {
         }
       });
     }
+
+ // Método para eliminar un docente
+ eliminarDocente(): void {
+  if (!this.docenteId) {
+    this.errorMessage = 'Por favor, ingrese un ID de docente válido.';
+    return;
+  }
+
+  this.docenteService.eliminarDocente(this.docenteId).subscribe({
+    next: (data) => {
+      this.mensaje = 'Docente eliminado exitosamente!';
+      this.docenteId = 0; // Reiniciar ID del docente
+    },
+    error: (error) => {
+      console.error('Error al eliminar al docente:', error);
+      this.errorMessage = 'Error al eliminar al docente. Detalles: ' + error.message;
+    }
+  });
+}
 
 }

@@ -21,6 +21,8 @@ export class AlumnoComponent implements OnInit{
   nuevoAlumno: Alumno = { nombre: '', fechaNacimiento: new Date, cursos:[] }; // Inicializa el objeto alumno sin ID
   alumnoActualizar: Alumno = { id: 0, nombre: '', fechaNacimiento: new Date() ,cursos:[]}; // Inicializa el objeto alumno
   mensaje: string = ''; // Para mostrar mensajes al usuario
+  cursoIds: number[] = []; // Lista de IDs de cursos
+  alumnoId: number = 0; // ID del alumno (inicialmente en 0)
 
   isDropdownOpen = false; // Estado del dropdown
   isDropdownCursoOpen = false; // Estado del dropdown para alumnos del curso
@@ -105,7 +107,44 @@ actualizarAlumno(): void {
   });
 }
 
+ // Método para inscribir al alumno en los cursos
+ inscribirseCurso(): void {
+  if (this.cursoIds.length === 0) {
+    this.errorMessage = 'La lista de cursos no puede estar vacía.';
+    return;
+  }
 
+  this.alumnoService.inscribirseCurso(this.alumnoId, this.cursoIds).subscribe({
+    next: (data) => {
+      this.mensaje = 'Alumno inscrito exitosamente en los cursos!';
+      // Reiniciar valores si es necesario
+      this.alumnoId = 0; // Reiniciar ID del alumno
+      this.cursoIds = []; // Reiniciar lista de cursos
+    },
+    error: (error) => {
+      console.error('Error al inscribir al alumno:', error);
+      this.errorMessage = 'Error al inscribir al alumno. Detalles: ' + error.message;
+    }
+  });
+}
 
+  // Método para eliminar un alumno
+  eliminarAlumno(): void {
+    if (!this.alumnoId) {
+      this.errorMessage = 'Por favor, ingrese un ID de alumno válido.';
+      return;
+    }
+
+    this.alumnoService.eliminarAlumno(this.alumnoId).subscribe({
+      next: (data) => {
+        this.mensaje = 'Alumno eliminado exitosamente!';
+        this.alumnoId = 0; // Reiniciar ID del alumno
+      },
+      error: (error) => {
+        console.error('Error al eliminar al alumno:', error);
+        this.errorMessage = 'Error al eliminar al alumno. Detalles: ' + error.message;
+      }
+    });
+  }
 
 }

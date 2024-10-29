@@ -56,6 +56,8 @@ public formatDate(date: Date): string {
 
   // Método para actualizar un curso
   public actualizarCurso(id: number, fechaInicio: Date, fechaFin: Date, precio: number): Observable<any> {
+    console.log("Fecha Inicio:", this.formatDate(fechaInicio));
+
     return this.http.put<any>(`${baseUrl}${id}`, {
       fechaInicio: this.formatDate(fechaInicio), // Fecha de inicio en formato ISO
       fechaFin: this.formatDate(fechaFin), // Fecha de finalización en formato ISO
@@ -64,5 +66,28 @@ public formatDate(date: Date): string {
     });
 
   }
+
+  // Método para cambiar el docente de un curso
+  public cambiarDocente(cursoId: number, docenteLegajo: number): Observable<any> {
+    const body = {
+      docenteId: docenteLegajo // ID del nuevo docente
+    };
+
+    return this.http.put<any>(`${baseUrl}${cursoId}/cambiarDocente`, body);
+  }
+
+  public cambiarTema(cursoId: number, temaId: number): Observable<any> {
+    const body = {
+      temaId: temaId // ID del nuevo tema
+    };
+
+    return this.http.put<any>(`${baseUrl}${cursoId}/cambiarTema`, body);
+  }
+
+  // Método para eliminar un curso
+  public eliminarCurso(cursoId: number): Observable<any> {
+    return this.http.delete<any>(`${baseUrl}${cursoId}`);
+  }
+
 
 }

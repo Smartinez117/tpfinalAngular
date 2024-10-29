@@ -28,4 +28,9 @@ export class DocenteService {
     return this.http.post<Docente>(baseUrl + 'guardar', docente);
   }
 
+    // Método para eliminar un docente
+    public eliminarDocente(docenteId: number): Observable<any> {
+      return this.http.delete<any>(`${baseUrl}/${docenteId}`);
+    }
+
 }

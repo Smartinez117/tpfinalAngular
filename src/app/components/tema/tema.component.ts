@@ -16,6 +16,7 @@ export class TemaComponent {
   temas: Tema[] = []; // Para almacenar todos los temas
   tema!: Tema; // Para almacenar un tema específico
   errorMessage: string = ''; // Para manejar errores
+  temaId:number=0;
 
   nuevoTema: Tema = { nombre: '', descripcion: '',cursos:[] }; // Inicializa el objeto tema
   mensaje: string = ''; // Para mostrar mensajes al usuario
@@ -68,4 +69,26 @@ export class TemaComponent {
     }
   });
 }
+
+
+// Método para eliminar un tema
+eliminarTema(): void {
+  if (!this.temaId) {
+    this.errorMessage = 'Por favor, ingrese un ID de tema válido.';
+    return;
+  }
+
+  this.temaService.eliminarTema(this.temaId).subscribe({
+    next: (data) => {
+      this.mensaje = 'Tema eliminado exitosamente!';
+      this.temaId = 0; // Reiniciar ID del tema
+    },
+    error: (error) => {
+      console.error('Error al eliminar el tema:', error);
+      this.errorMessage = 'Error al eliminar el tema. Detalles: ' + error.message;
+    }
+  });
+}
+
+
 }

@@ -5,15 +5,9 @@ import { DocenteComponent } from './components/docente/docente.component'; // Aj
 import { TemaComponent } from './components/tema/tema.component'; // Ajusta la ruta según tu estructura
 
 export const routes: Routes = [
-  { path: 'alumno', component: AlumnoComponent },
+  { path: 'alumno', component: AlumnoComponent }, // Cambiado a 'alumno'
   { path: 'cursos', component: CursoComponent },
   { path: 'docentes', component: DocenteComponent },
   { path: 'temas', component: TemaComponent },
-  { path: '', redirectTo: '/alumnos', pathMatch: 'full' }, // Redirigir a alumnos por defecto
+  { path: '', redirectTo: '/alumno', pathMatch: 'full' }, // Redirigir a 'alumno' por defecto
 ];
-
-/*
-import { Routes } from '@angular/router';
-
-export const routes: Routes = [];
-*/

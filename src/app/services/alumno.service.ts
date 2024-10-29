@@ -40,4 +40,20 @@ export class AlumnoService {
   public actualizarAlumno(alumno: Alumno): Observable<any> {
     return this.http.put<any>(`${baseUrl}${alumno.id}`, alumno);
   }
+
+
+    // Método para inscribir a un alumno en varios cursos
+    public inscribirseCurso(alumnoId: number, cursoIds: number[]): Observable<any> {
+      const body = {
+        cursoIds: cursoIds // Lista de IDs de los cursos
+      };
+
+      return this.http.post<any>(`${baseUrl}/${alumnoId}/inscribirseCurso`, body);
+    }
+
+      // Método para eliminar un alumno
+  public eliminarAlumno(alumnoId: number): Observable<any> {
+    return this.http.delete<any>(`${baseUrl}${alumnoId}`);
+  }
+
 }

@@ -31,10 +31,13 @@ export class CursoComponent implements OnInit {
   docenteLegajo: number = 0; // Legajo del docente
   mensaje: string = ''; // Para mostrar mensajes al usuario
 
-  cursoId: number = 1; // ID del curso a actualizar (puedes cambiarlo según tu lógica)
+  cursoId: number =0 ; // ID del curso a actualizar (puedes cambiarlo según tu lógica)
   fechaInicio: Date = new Date(); // Fecha de inicio por defecto
   fechaFin: Date = new Date();  // Fecha de finalización por defecto
   precio: number = 0; // Precio por defecto
+
+  cursoIdcambiar!:number;
+
 
 
   constructor(private cursoService: CursoService) { }
@@ -119,7 +122,6 @@ export class CursoComponent implements OnInit {
   }
 
 
-
     // Método para actualizar el curso
     actualizarCurso(): void {
       if (typeof this.fechaInicio === 'string') {
@@ -128,6 +130,7 @@ export class CursoComponent implements OnInit {
       if (typeof this.fechaFin === 'string') {
         this.fechaFin = new Date(this.fechaFin);
       }
+
       this.cursoService.actualizarCurso(this.cursoId, this.fechaInicio, this.fechaFin, this.precio).subscribe({
         next: (data) => {
           console.log(data);
@@ -144,6 +147,58 @@ export class CursoComponent implements OnInit {
       });
     }
 
+  // Método para cambiar el docente del curso
+  cambiarDocente(): void {
+    this.cursoService.cambiarDocente(this.cursoId, this.docenteLegajo).subscribe({
+      next: (data) => {
+        this.mensaje = 'Docente cambiado exitosamente!'
+        this.cursoId= 0
+      },
+      error: (error) => {
+        console.error('Error al cambiar el docente:', error);
+        this.errorMessage = 'Error al cambiar el docente. Detalles: ' + error.message;
+      }
+    });
+  }
 
+   // Método para cambiar el tema del curso
+   cambiarTema(): void {
+    if (!this.cursoId || !this.temaId) {
+      this.errorMessage = 'Por favor, ingrese un ID de curso y un ID de tema válidos.';
+      return;
+    }
+
+    this.cursoService.cambiarTema(this.cursoId, this.temaId).subscribe({
+      next: (data) => {
+        this.mensaje = 'Tema cambiado exitosamente!';
+        // Reiniciar valores si es necesario
+        this.cursoId = 0; // Reiniciar ID del curso
+        this.temaId = 0; // Reiniciar ID del tema
+      },
+      error: (error) => {
+        console.error('Error al cambiar el tema:', error);
+        this.errorMessage = 'Error al cambiar el tema. Detalles: ' + error.message;
+      }
+    });
+  }
+
+// Método para eliminar un curso
+eliminarCurso(): void {
+  if (!this.cursoId) {
+    this.errorMessage = 'Por favor, ingrese un ID de curso válido.';
+    return;
+  }
+
+  this.cursoService.eliminarCurso(this.cursoId).subscribe({
+    next: (data) => {
+      this.mensaje = 'Curso eliminado exitosamente!';
+      this.cursoId = 0; // Reiniciar ID del curso
+    },
+    error: (error) => {
+      console.error('Error al eliminar el curso:', error);
+      this.errorMessage = 'Error al eliminar el curso. Detalles: ' + error.message;
+    }
+  });
+}
 
 }

@@ -27,4 +27,11 @@ export class TemaService {
   public guardarTema(tema: Tema): Observable<Tema> {
     return this.http.post<Tema>(baseUrl+ 'guardar' , tema);
   }
+
+  // Método para eliminar un tema
+  public eliminarTema(temaId: number): Observable<any> {
+    return this.http.delete<any>(`${baseUrl}/${temaId}`);
+  }
+
+
 }
