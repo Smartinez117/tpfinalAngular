@@ -28,6 +28,16 @@ export class DocenteService {
     return this.http.post<Docente>(baseUrl + 'guardar', docente);
   }
 
+
+    // Método para modificar los datos de un docente
+    public modificarDocente(legajo: number, nombre: string): Observable<any> {
+      const body = {
+        nombre: nombre // Nuevo nombre del docente
+      };
+
+      return this.http.put<any>(`${baseUrl}/${legajo}`, body);
+    }
+
     // Método para eliminar un docente
     public eliminarDocente(docenteId: number): Observable<any> {
       return this.http.delete<any>(`${baseUrl}/${docenteId}`);

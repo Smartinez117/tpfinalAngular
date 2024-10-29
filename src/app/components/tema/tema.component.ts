@@ -21,6 +21,10 @@ export class TemaComponent {
   nuevoTema: Tema = { nombre: '', descripcion: '',cursos:[] }; // Inicializa el objeto tema
   mensaje: string = ''; // Para mostrar mensajes al usuario
 
+  legajo: number = 0; // Legajo del tema a modificar
+  nombre: string = ''; // Nuevo nombre del tema
+  descripcion: string = ''; // Nueva descripción del tema
+
   isDropdownOpen = false; // Estado del dropdown
   isDropdownCursoOpen = false; // Estado del dropdown para tema
 
@@ -69,6 +73,29 @@ export class TemaComponent {
     }
   });
 }
+
+
+  // Método para modificar los datos del tema
+  modificarTema(): void {
+    if (!this.legajo || !this.nombre || !this.descripcion) {
+      this.errorMessage = 'Por favor, ingrese un legajo, un nombre y una descripción válidos.';
+      return;
+    }
+
+    this.temaService.modificarTema(this.legajo, this.nombre, this.descripcion).subscribe({
+      next: (data) => {
+        this.mensaje = 'Datos del tema modificados exitosamente!';
+        this.legajo = 0; // Reiniciar legajo
+        this.nombre = ''; // Reiniciar nombre
+        this.descripcion = ''; // Reiniciar descripción
+      },
+      error: (error) => {
+        console.error('Error al modificar los datos del tema:', error);
+        this.errorMessage = 'Error al modificar los datos. Detalles: ' + error.message;
+      }
+    });
+  }
+
 
 
 // Método para eliminar un tema

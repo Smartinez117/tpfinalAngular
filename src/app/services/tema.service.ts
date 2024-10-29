@@ -28,6 +28,18 @@ export class TemaService {
     return this.http.post<Tema>(baseUrl+ 'guardar' , tema);
   }
 
+
+  // Método para modificar los datos de un tema
+  public modificarTema(legajo: number, nombre: string, descripcion: string): Observable<any> {
+    const body = {
+      nombre: nombre, // Nuevo nombre del tema
+      descripcion: descripcion // Nueva descripción del tema
+    };
+
+    return this.http.put<any>(`${baseUrl}/${legajo}`, body);
+  }
+
+
   // Método para eliminar un tema
   public eliminarTema(temaId: number): Observable<any> {
     return this.http.delete<any>(`${baseUrl}/${temaId}`);

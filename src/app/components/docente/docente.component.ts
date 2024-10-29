@@ -18,6 +18,9 @@ export class DocenteComponent implements OnInit {
   errorMessage: string = ''; // Para manejar errores
   docenteId:number =0;
 
+  nombre:string = '';
+  legajo:number =0;
+
   //guardar un nuevo docente.
   nuevoDocente: Docente = { legajo: 0, nombre: '',cursos:[] }; // Inicializa el objeto docente
   mensaje: string = ''; // Para mostrar mensajes al usuario
@@ -70,6 +73,29 @@ export class DocenteComponent implements OnInit {
         }
       });
     }
+
+
+  // Método para modificar los datos del docente
+  modificarDocente(): void {
+    if (!this.legajo || !this.nombre) {
+      this.errorMessage = 'Por favor, ingrese un legajo y un nombre válidos.';
+      return;
+    }
+
+    this.docenteService.modificarDocente(this.legajo, this.nombre).subscribe({
+      next: (data) => {
+        this.mensaje = 'Datos del docente modificados exitosamente!';
+        this.legajo = 0; // Reiniciar legajo
+        this.nombre = ''; // Reiniciar nombre
+      },
+      error: (error) => {
+        console.error('Error al modificar los datos del docente:', error);
+        this.errorMessage = 'Error al modificar los datos. Detalles: ' + error.message;
+      }
+    });
+  }
+
+
 
  // Método para eliminar un docente
  eliminarDocente(): void {
