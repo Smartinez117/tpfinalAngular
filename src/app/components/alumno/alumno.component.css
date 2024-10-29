@@ -1,0 +1,68 @@
+/* Estilo general para el componente */
+h1 {
+  color: #4a90e2; /* Azul */
+}
+
+h2 {
+  color: #333; /* Color gris oscuro para subtítulos */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: auto; /* Centra el formulario horizontalmente */
+}
+
+label {
+  margin-top: 10px; /* Espacio superior para las etiquetas */
+}
+
+input {
+  padding: 8px; /* Espaciado interno en los campos de entrada */
+  margin-top: 5px; /* Espacio superior para los campos de entrada */
+  border-radius: 4px; /* Bordes redondeados */
+  border: 1px solid #ccc; /* Borde gris claro */
+}
+
+button {
+  margin-top: 15px; /* Espacio superior para el botón */
+  background-color: #5cb85c; /* Color verde */
+  color: white; /* Color del texto */
+  padding: 10px; /* Espaciado interno */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+button:hover {
+  background-color: #4cae4c; /* Color más oscuro al pasar el mouse */
+}
+
+.dropdown {
+   margin-top: 10px;
+}
+
+.dropdown ul {
+   list-style-type: none; /* Sin viñetas para los elementos de la lista */
+   padding-left: 0; /* Sin padding a la izquierda */
+}
+
+.cursos-alumno {
+   list-style-type: none; /* Sin viñetas para los cursos dentro de cada alumno */
+   padding-left: 0; /* Sin padding a la izquierda */
+}
+
+.curso-alumno-item {
+   margin-bottom: 5px; /* Espacio inferior entre elementos de cursos */
+}
+
+div {
+   text-align: center; /* Centra el texto dentro del div */
+}
+
+
+.alumno-list {
+  border: 2px solid green; /*Borde gris claro*/
+  border-radius: 5px; /* Bordes redondeados*/
+}
+

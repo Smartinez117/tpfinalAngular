@@ -1,0 +1,62 @@
+<div>
+  <h1>Lista de Docentes</h1>
+
+  <button (click)="loadAllDocentes()">Cargar Todos los Docentes</button>
+
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <!-- Botón para mostrar el dropdown -->
+  <button class="dropbtn" (click)="isDropdownOpen = !isDropdownOpen">Ver lista de temas</button>
+
+  <div class="dropdown" *ngIf="isDropdownOpen">
+  <ul>
+    <li *ngFor="let docente of docentes">
+      {{ docente.nombre }} | Legajo: {{ docente.legajo }}
+      <h5>CURSOS QUE DICTA:</h5>
+      <ul *ngFor="let curso of docente.cursos">
+        <span><strong>ID: </strong>{{curso.id}}</span>
+        <h4><strong>TEMA</strong></h4>
+        <span>ID tema:{{curso.tema.id}}</span> |
+        <span>nombre tema: {{curso.tema.nombre}}</span>
+
+      </ul>
+
+    </li>
+  </ul>
+  </div>
+
+  <h2>Buscar Docente por ID</h2>
+  <input type="number" #docenteId placeholder="Ingrese Legajo del Docente">
+  <button (click)="loadDocenteById(+docenteId.value)">Buscar</button>
+  @if(docente){
+    <div>
+      <h4>{{ docente.nombre }} legajo: {{ docente.legajo }} </h4>
+      <h5>CURSOS QUE DICTA:</h5>
+      <ul *ngFor="let curso of docente.cursos">
+        <span><strong>ID: </strong>{{curso.id}}</span>
+        <h4><strong>TEMA</strong></h4>
+        <span>ID tema:{{curso.tema.id}}</span> |
+        <span>nombre tema: {{curso.tema.nombre}}</span>
+
+      </ul>
+    </div>
+  }
+
+  <h1>Registrar Nuevo Docente</h1>
+
+  <form (ngSubmit)="guardarDocente()">
+    <div>
+      <label for="legajo">Legajo:</label>
+      <input type="number" id="legajo" [(ngModel)]="nuevoDocente.legajo" name="legajo" required />
+    </div>
+    <div>
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" [(ngModel)]="nuevoDocente.nombre" name="nombre" required />
+    </div>
+    <button type="submit">Guardar Docente</button>
+  </form>
+
+  <div *ngIf="mensaje">{{ mensaje }}</div>
+
+
+</div>

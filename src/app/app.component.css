@@ -1,0 +1,69 @@
+/* Estilo general */
+body {
+  font-family: 'Arial', sans-serif; /* Fuente básica */
+  background-color: green; /* Color de fondo claro */
+}
+
+/* Estilo para el título */
+.title {
+  color: #4a90e2; /* Azul */
+  text-align: center; /* Centrar el texto */
+}
+
+/* Estilo para los botones */
+.btn, .dropbtn {
+  background-color: #5cb85c; /* Color verde */
+  color: white; /* Color del texto */
+  padding: 10px 20px; /* Espaciado interno */
+  font-size: 16px; /* Tamaño de fuente */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambiar cursor al pasar el mouse */
+  margin-top: 10px; /* Espacio superior entre botones */
+}
+
+.btn:hover, .dropbtn:hover {
+  background-color: #4cae4c; /* Color más oscuro al pasar el mouse */
+}
+
+/* Estilo para mensajes de error */
+.error {
+  color: red; /* Color rojo para mensajes de error */
+  text-align: center; /* Centrar el texto de error */
+}
+
+/* Estilo para la lista de alumnos en el dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown ul {
+  display: block; /* Mostrar la lista como bloque */
+  position: absolute; /* Posicionar absolutamente */
+  background-color: #ffffff; /* Fondo blanco para el dropdown */
+  min-width: 200px; /* Ancho mínimo del dropdown */
+  z-index: 1; /* Asegurarse de que esté por encima de otros elementos */
+  border-radius: 5px; /* Bordes redondeados */
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* Sombra suave */
+}
+
+/* Estilo para cada elemento de alumno en la lista */
+.alumno-item {
+  padding: 10px; /* Espaciado interno en cada elemento de la lista */
+  border-bottom: 1px solid #ddd; /* Línea divisoria entre elementos */
+}
+
+.alumno-item:hover {
+  background-color: #f1f1f1; /* Color de fondo al pasar el mouse sobre un elemento de la lista */
+}
+
+/* Estilo para cursos dentro de cada alumno */
+.cursos-alumno {
+  list-style-type: none; /* Sin viñetas para cursos */
+}
+
+/* Estilo para cada elemento de curso dentro del dropdown */
+.curso-alumno-item {
+  background-color: #e9ecef; /* Fondo gris más claro para cursos */
+  padding-left: 10px; /* Espaciado interno a la izquierda */
+}

@@ -1,0 +1,62 @@
+<div>
+  <h1>Lista de Temas</h1>
+
+  <button (click)="loadAllTemas()">Cargar Todos los Temas</button>
+
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <!-- Botón para mostrar el dropdown -->
+  <button class="dropbtn" (click)="isDropdownOpen = !isDropdownOpen">Ver lista de temas</button>
+
+  <div class="dropdown" *ngIf="isDropdownOpen">
+  <ul>
+    <li *ngFor="let tema of temas">
+      <h4>TEMA</h4>
+      nombre: {{ tema.nombre }} | ID: {{ tema.id }} | descripcion:{{tema.descripcion}}
+      <h4>cursos donde se dicta:</h4>
+      <div>
+      <ul *ngFor="let curso of tema.cursos">
+       <span>id: {{curso.id}}</span> |
+       <span>fecha de inicio: {{curso.fechaInicio | date:'short'}}  </span> |
+       <span>fecha de finalizacion: {{curso.fechaFin | date:'short'}}</span>
+      </ul>
+      </div>
+    </li>
+  </ul>
+  </div>
+
+  <h2>Buscar Tema por ID</h2>
+  <input type="number" #temaId placeholder="Ingrese ID del Tema">
+  <button (click)="loadTemaById(+temaId.value)">Buscar</button>
+  @if(tema){
+    <div>
+      <h4>TEMA</h4>
+      nombre: {{ tema.nombre }} | ID: {{ tema.id }} | descripcion:{{tema.descripcion}}
+      <h4>cursos donde se dicta:</h4>
+      <div>
+      <ul *ngFor="let curso of tema.cursos">
+       <span>id: {{curso.id}}</span> |
+       <span>fecha de inicio: {{curso.fechaInicio | date:'short'}}  </span> |
+       <span>fecha de finalizacion: {{curso.fechaFin | date:'short'}}</span>
+      </ul>
+      </div>
+    </div>
+  }
+
+  <h1>Registrar Nuevo Tema</h1>
+
+  <form (ngSubmit)="guardarTema()">
+    <div>
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" [(ngModel)]="nuevoTema.nombre" name="nombre" required />
+    </div>
+    <div>
+      <label for="descripcion">Descripción:</label>
+      <input type="text" id="descripcion" [(ngModel)]="nuevoTema.descripcion" name="descripcion" required />
+    </div>
+    <button type="submit">Guardar Tema</button>
+  </form>
+
+  <div *ngIf="mensaje">{{ mensaje }}</div>
+
+</div>

@@ -1,0 +1,117 @@
+<div>
+  <h1>Lista de Alumnos</h1>
+
+  <button (click)="loadAllAlumnos()">Cargar Todos los Alumnos</button>
+
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <!-- Botón para mostrar el dropdown -->
+  <button class="dropbtn" (click)="isDropdownOpen = !isDropdownOpen">Ver Alumnos</button>
+
+  <!-- Dropdown que muestra la lista de alumnos -->
+  <div class="dropdown" *ngIf="isDropdownOpen">
+    <div class ="alumno-list">
+    <ul>
+      <li *ngFor="let alumno of alumnos">
+        <h4><strong>{{ alumno.nombre }} </strong></h4>
+        ID: {{ alumno.id }} ,fecha de nacimiento: {{ alumno.fechaNacimiento | date:'short'}}
+        <h4>cursos que cursa:</h4>
+        <ul class="cursos-alumno">
+          <li *ngFor="let curso of alumno.cursos" class="curso-alumno-item">
+            <span>ID Curso: {{ curso.id }} </span>|
+            <span>Precio Curso: usd${{ curso.precio }} </span>|
+            <span>Fecha Inicio: {{ curso.fechaInicio | date:'short' }} </span>|
+            <span>Fecha Fin: {{ curso.fechaFin | date:'short' }}</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+   </div>
+  </div>
+
+  <h2>Buscar Alumno por ID</h2>
+  <input type="number" #alumnoId placeholder="Ingrese ID del Alumno">
+  <button (click)="loadAlumnoById(+alumnoId.value)">Buscar</button>
+
+  <div *ngIf="alumno">
+    <h4>{{ alumno.nombre }} (ID: {{ alumno.id }}) (fecha_nacimiento:{{alumno.fechaNacimiento | date:'short'}})</h4>
+    <ul class="cursos-alumno">
+      <li *ngFor="let curso of alumno.cursos" class="curso-alumno-item">
+        <span>ID Curso: {{curso.id}}</span>
+        <span>Precio Curso: usd${{curso.precio}}</span>
+        <span>Fecha Inicio: {{curso.fechaInicio | date:'short'}}</span>
+        <span>Fecha Fin: {{curso.fechaFin | date:'short'}}</span>
+      </li>
+    </ul>
+  </div>
+
+  <h2>Alumnos de un Curso</h2>
+  <input type="number" #cursoId placeholder="Ingrese ID del Curso">
+  <button (click)="loadAlumnosPorCurso(+cursoId.value)">Cargar Alumnos del Curso</button>
+
+  <!-- Botón para mostrar el dropdown de alumnos del curso -->
+  <button class="dropbtn" (click)="isDropdownCursoOpen = !isDropdownCursoOpen">Ver Alumnos del Curso</button>
+
+  <div class="dropdown" *ngIf="isDropdownCursoOpen">
+    <ul>
+      <li *ngFor="let alumno of alumnosDelCurso"> <!-- Asegúrate de que esta variable contenga los alumnos del curso -->
+        {{ alumno.nombre }} ,ID: {{ alumno.id }} ,fecha_nacimiento: {{ alumno.fechaNacimiento | date:'short' }}
+        <ul class="cursos-alumno">
+          <li *ngFor="let curso of alumno.cursos" class="curso-alumno-item">
+            <span>ID Curso: {{ curso.id }}</span>
+            <span>Precio Curso: usd${{ curso.precio }}</span>
+            <span>Fecha Inicio: {{ curso.fechaInicio | date:'short' }}</span>
+            <span>Fecha Fin: {{ curso.fechaFin | date:'short' }}</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <h1>Registrar Nuevo Alumno</h1>
+
+  <form (ngSubmit)="guardarAlumno()">
+    <div>
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" [(ngModel)]="nuevoAlumno.nombre" name="nombre" required />
+    </div>
+    <div>
+      <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+      <input type="date" id="fecha_nacimiento"
+             [(ngModel)]="nuevoAlumno.fechaNacimiento" name="fecha_nacimiento" required />
+    </div>
+    <button type="submit">Guardar Alumno</button>
+  </form>
+
+  <div *ngIf="mensaje">{{ mensaje }}</div>
+
+
+
+
+  <div>
+    <h1>Actualizar Alumno(datos personales)</h1>
+
+    <form (ngSubmit)="actualizarAlumno()">
+      <div>
+        <label for="id">ID:</label>
+        <input type="number" id="id" [(ngModel)]="alumnoActualizar.id" name="id" required />
+      </div>
+      <div>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" [(ngModel)]="alumnoActualizar.nombre" name="nombre" required />
+      </div>
+      <div>
+        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="fechaNacimiento" [(ngModel)]="alumnoActualizar.fechaNacimiento" name="fechaNacimiento" required />
+      </div>
+      <button type="submit">Actualizar Alumno</button>
+    </form>
+
+    <div *ngIf="mensaje">{{ mensaje }}</div>
+  </div>
+
+
+
+
+
+</div>
