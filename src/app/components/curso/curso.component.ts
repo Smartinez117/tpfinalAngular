@@ -31,7 +31,7 @@ export class CursoComponent implements OnInit {
   docenteLegajo: number = 0; // Legajo del docente
   mensaje: string = ''; // Para mostrar mensajes al usuario
 
-  cursoId: number =0 ; // ID del curso a actualizar (puedes cambiarlo según tu lógica)
+  cursoId: number=99 ; // ID del curso a actualizar (puedes cambiarlo según tu lógica)
   fechaInicio: Date = new Date(); // Fecha de inicio por defecto
   fechaFin: Date = new Date();  // Fecha de finalización por defecto
   precio: number = 0; // Precio por defecto
@@ -40,7 +40,11 @@ export class CursoComponent implements OnInit {
 
 
 
-  constructor(private cursoService: CursoService) { }
+  constructor(private cursoService: CursoService) { 
+  this.NewItem= new Curso();
+
+  }
+  public NewItem :Curso;
 
   ngOnInit(): void {
     //this.loadAllCursos(); // Cargar todos los cursos al inicializar
@@ -149,6 +153,8 @@ export class CursoComponent implements OnInit {
 
   // Método para cambiar el docente del curso
   cambiarDocente(): void {
+    console.log(this.cursoId);
+    
     this.cursoService.cambiarDocente(this.cursoId, this.docenteLegajo).subscribe({
       next: (data) => {
         this.mensaje = 'Docente cambiado exitosamente!'

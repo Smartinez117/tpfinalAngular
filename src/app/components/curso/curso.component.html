@@ -162,7 +162,9 @@
       </div>
       <div>
         <label for="fechaInicio">Fecha de Inicio:</label>
-        <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio" name="fechaInicio" required />
+        <input type="date" id="fechaInicio" name ="fechaInicio" (change)="NewItem.fechaInicio=fechaInicio.value"
+        class="form-control" [value]="NewItem.fechaInicio | date: 'yyyy-mm-dd'"
+        [ngModel]="NewItem.fechaInicio | date: 'yyyy-mm-dd' " #fechaInicio="ngModel" required />
       </div>
       <div>
         <label for="fechaFin">Fecha de Finalización:</label>

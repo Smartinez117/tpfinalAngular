@@ -72,8 +72,10 @@ public formatDate(date: Date): string {
     const body = {
       docenteId: docenteLegajo // ID del nuevo docente
     };
-
+    console.log(body);
+    
     return this.http.put<any>(`${baseUrl}${cursoId}/cambiarDocente`, body);
+    
   }
 
   public cambiarTema(cursoId: number, temaId: number): Observable<any> {

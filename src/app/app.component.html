@@ -1,15 +1,10 @@
 <div>
   <nav>
-    <a routerLink="/alumno" routerLinkActive="active">Alumnos</a>
-    <a routerLink="/docentes" routerLinkActive="active">Docentes</a>
-    <a routerLink="/cursos" routerLinkActive="active">Cursos</a>
-    <a routerLink="/temas" routerLinkActive="active">Temas</a>
+    <a href="alumno" routerLink="/alumno" routerLinkActive="active">Alumnos</a>
+    <a href="docentes"routerLink="/docentes" routerLinkActive="active">Docentes</a>
+    <a href="cursos" routerLink="/cursos" routerLinkActive="active">Cursos</a>
+    <a href="temas"routerLink="/temas" routerLinkActive="active">Temas</a>
   </nav>
-  <app-alumno></app-alumno>
-  <app-curso></app-curso>
-
-  <app-docente></app-docente>
-  <app-tema></app-tema>
-
+<router-outlet></router-outlet>
 
 </div>
