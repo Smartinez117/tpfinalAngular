@@ -31,6 +31,7 @@ export class CursoService {
 
  // Método para guardar un nuevo curso
  public crearCurso(temaId: number, curso: Curso, docenteLegajo: number): Observable<any> {
+  console.log('Datos del curso antes de enviar (servicio):', curso);
 
   const body = {
     temaId,
@@ -41,9 +42,7 @@ export class CursoService {
     },
     docenteLegajo
   };
-  console.log(temaId);
-  console.log(docenteLegajo);
-  console.log(curso);
+  console.log('Cuerpo del request antes de enviar:', body);
 
   return this.http.post<any>(`${baseUrl}crearCurso`, body);
 }
@@ -73,9 +72,9 @@ public formatDate(date: Date): string {
       docenteId: docenteLegajo // ID del nuevo docente
     };
     console.log(body);
-    
+
     return this.http.put<any>(`${baseUrl}${cursoId}/cambiarDocente`, body);
-    
+
   }
 
   public cambiarTema(cursoId: number, temaId: number): Observable<any> {

@@ -2,105 +2,73 @@
   <h1>Lista de Temas</h1>
 
   <button (click)="loadAllTemas()">Cargar Todos los Temas</button>
-
   <div *ngIf="errorMessage">{{ errorMessage }}</div>
 
-  <!-- Botón para mostrar el dropdown -->
   <button class="dropbtn" (click)="isDropdownOpen = !isDropdownOpen">Ver lista de temas</button>
-
   <div class="dropdown" *ngIf="isDropdownOpen">
-  <ul>
-    <li *ngFor="let tema of temas">
-      <h4>TEMA</h4>
-      nombre: {{ tema.nombre }} | ID: {{ tema.id }} | descripcion:{{tema.descripcion}}
-      <h4>cursos donde se dicta:</h4>
-      <div>
-      <ul *ngFor="let curso of tema.cursos">
-       <span>id: {{curso.id}}</span> |
-       <span>fecha de inicio: {{curso.fechaInicio | date:'short'}}  </span> |
-       <span>fecha de finalizacion: {{curso.fechaFin | date:'short'}}</span>
-      </ul>
-      </div>
-    </li>
-  </ul>
+    <ul>
+      <li *ngFor="let tema of temas">
+        <h4>TEMA</h4>
+        nombre: {{ tema.nombre }} | ID: {{ tema.id }} | descripcion: {{ tema.descripcion }}
+        <h4>cursos donde se dicta:</h4>
+        <ul *ngFor="let curso of tema.cursos">
+          <span>id: {{ curso.id }}</span> |
+          <span>fecha de inicio: {{ curso.fechaInicio | date:'short' }}</span> |
+          <span>fecha de finalizacion: {{ curso.fechaFin | date:'short' }}</span>
+        </ul>
+      </li>
+    </ul>
   </div>
 
   <h2>Buscar Tema por ID</h2>
   <input type="number" #temaId placeholder="Ingrese ID del Tema">
   <button (click)="loadTemaById(+temaId.value)">Buscar</button>
-  @if(tema){
+
+  <div *ngIf="tema">
+    <h4>TEMA</h4>
+    nombre: {{ tema.nombre }} | ID: {{ tema.id }} | descripcion: {{ tema.descripcion }}
+    <h4>cursos donde se dicta:</h4>
+    <ul *ngFor="let curso of tema.cursos">
+      <span>id: {{ curso.id }}</span> |
+      <span>fecha de inicio: {{ curso.fechaInicio | date:'short' }}</span> |
+      <span>fecha de finalizacion: {{ curso.fechaFin | date:'short' }}</span>
+    </ul>
+  </div>
+
+  <h1>Registrar o Modificar Tema</h1>
+
+  <form (ngSubmit)="guardarOActualizarTema()" #temaForm="ngForm">
     <div>
-      <h4>TEMA</h4>
-      nombre: {{ tema.nombre }} | ID: {{ tema.id }} | descripcion:{{tema.descripcion}}
-      <h4>cursos donde se dicta:</h4>
-      <div>
-      <ul *ngFor="let curso of tema.cursos">
-       <span>id: {{curso.id}}</span> |
-       <span>fecha de inicio: {{curso.fechaInicio | date:'short'}}  </span> |
-       <span>fecha de finalizacion: {{curso.fechaFin | date:'short'}}</span>
-      </ul>
-      </div>
+      <label for="temaId">ID del Tema:</label>
+      <input type="number" id="temaId" [(ngModel)]="legajo" name="legajo" required />
     </div>
-  }
-
-  <h1>Registrar Nuevo Tema</h1>
-
-  <form (ngSubmit)="guardarTema()">
     <div>
       <label for="nombre">Nombre:</label>
       <input type="text" id="nombre" [(ngModel)]="nuevoTema.nombre" name="nombre" required />
     </div>
     <div>
       <label for="descripcion">Descripción:</label>
-      <input type="text" id="descripcion" [(ngModel)]="nuevoTema.descripcion" name="descripcion" required />
+      <textarea id="descripcion" [(ngModel)]="nuevoTema.descripcion" name="descripcion" required></textarea>
     </div>
-    <button type="submit">Guardar Tema</button>
+
+    <button type="submit">{{ legajo ? 'Modificar' : 'Guardar Tema' }}</button>
   </form>
 
   <div *ngIf="mensaje">{{ mensaje }}</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
-
-  <div>
-    <h1>Modificar Datos del Tema</h1>
-
-    <form (ngSubmit)="modificarTema()">
-      <div>
-        <label for="legajo">Legajo del Tema:</label>
-        <input type="number" id="legajo" [(ngModel)]="legajo" name="legajo" required />
-      </div>
-      <div>
-        <label for="nombre">Nuevo Nombre:</label>
-        <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre" required />
-      </div>
-      <div>
-        <label for="descripcion">Nueva Descripción:</label>
-        <textarea id="descripcion" [(ngModel)]="descripcion" name="descripcion" required></textarea>
-      </div>
-      <button type="submit">Modificar</button>
-    </form>
-
-    <div *ngIf="mensaje">{{ mensaje }}</div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-  </div>
-
-
-
+  <!-- Sección para eliminar un tema -->
   <div>
     <h1>Eliminar Tema</h1>
-
-    <form (ngSubmit)="eliminarTema()">
+    <form (ngSubmit)="eliminarTema()" #eliminarForm="ngForm">
       <div>
         <label for="temaId">ID del Tema:</label>
-        <input type="number" id="temaId" [(ngModel)]="temaId" name="temaId" required />
+        <input type="number" id="temaId" [(ngModel)]="temaModificar" name="temaModificar" required />
       </div>
       <button type="submit">Eliminar</button>
     </form>
-
     <div *ngIf="mensaje">{{ mensaje }}</div>
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   </div>
-
-
-
 
 </div>

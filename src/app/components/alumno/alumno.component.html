@@ -5,42 +5,21 @@
 
   <div *ngIf="errorMessage">{{ errorMessage }}</div>
 
-  <!-- Botón para mostrar el dropdown -->
   <button class="dropbtn" (click)="isDropdownOpen = !isDropdownOpen">Ver Alumnos</button>
 
-  <!-- Dropdown que muestra la lista de alumnos -->
   <div class="dropdown" *ngIf="isDropdownOpen">
-    <div class ="alumno-list">
     <ul>
       <li *ngFor="let alumno of alumnos">
-        <h4><strong>{{ alumno.nombre }} </strong></h4>
-        ID: {{ alumno.id }} ,fecha de nacimiento: {{ alumno.fechaNacimiento | date:'short'}}
-        <h4>cursos que cursa:</h4>
+        <h4><strong>{{ alumno.nombre }}</strong></h4>
+        ID: {{ alumno.id }}, Fecha de Nacimiento: {{ alumno.fechaNacimiento | date:'short' }}
+        <h4>Cursos:</h4>
         <ul class="cursos-alumno">
           <li *ngFor="let curso of alumno.cursos" class="curso-alumno-item">
-            <span>ID Curso: {{ curso.id }} </span>|
-            <span>Precio Curso: usd${{ curso.precio }} </span>|
-            <span>Fecha Inicio: {{ curso.fechaInicio | date:'short' }} </span>|
-            <span>Fecha Fin: {{ curso.fechaFin | date:'short' }}</span>
+            ID Curso: {{ curso.id }} | Precio Curso: usd${{ curso.precio }} |
+            Fecha Inicio: {{ curso.fechaInicio | date:'short' }} |
+            Fecha Fin: {{ curso.fechaFin | date:'short' }}
           </li>
         </ul>
-      </li>
-    </ul>
-   </div>
-  </div>
-
-  <h2>Buscar Alumno por ID</h2>
-  <input type="number" #alumnoId placeholder="Ingrese ID del Alumno">
-  <button (click)="loadAlumnoById(+alumnoId.value)">Buscar</button>
-
-  <div *ngIf="alumno">
-    <h4>{{ alumno.nombre }} (ID: {{ alumno.id }}) (fecha_nacimiento:{{alumno.fechaNacimiento | date:'short'}})</h4>
-    <ul class="cursos-alumno">
-      <li *ngFor="let curso of alumno.cursos" class="curso-alumno-item">
-        <span>ID Curso: {{curso.id}}</span>
-        <span>Precio Curso: usd${{curso.precio}}</span>
-        <span>Fecha Inicio: {{curso.fechaInicio | date:'short'}}</span>
-        <span>Fecha Fin: {{curso.fechaFin | date:'short'}}</span>
       </li>
     </ul>
   </div>
@@ -68,83 +47,55 @@
     </ul>
   </div>
 
-  <h1>Registrar Nuevo Alumno</h1>
+
+
+
+
+  <h2>Buscar y Registrar Alumno</h2>
 
   <form (ngSubmit)="guardarAlumno()">
-    <div>
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" [(ngModel)]="nuevoAlumno.nombre" name="nombre" required />
-    </div>
-    <div>
-      <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-      <input type="date" id="fecha_nacimiento"
-             [(ngModel)]="nuevoAlumno.fechaNacimiento" name="fecha_nacimiento" required />
-    </div>
+    <input type="number" [(ngModel)]="alumnoId" placeholder="ID del Alumno" name="alumnoId" required />
+
+    <input type="text" [(ngModel)]="nuevoAlumno.nombre" placeholder="Nombre del Alumno" name="nombre" required />
+
+    <input type="date" [(ngModel)]="nuevoAlumno.fechaNacimiento" name="fechaNacimiento" required />
+
     <button type="submit">Guardar Alumno</button>
+
+    <button (click)="loadAlumnoById(alumnoId)">Buscar</button>
+
+    <div *ngIf="mensaje">{{ mensaje }}</div>
+
+    <div *ngIf="alumno">
+      <h4>{{ alumno.nombre }} (ID: {{ alumno.id }})</h4>
+      <!-- Mostrar cursos del alumno -->
+      <ul class="cursos-alumno">
+        <li *ngFor="let curso of alumno.cursos" class="curso-alumno-item">
+          ID Curso: {{ curso.id }} | Precio Curso: usd${{ curso.precio }} |
+          Fecha Inicio: {{ curso.fechaInicio | date:'short' }} |
+          Fecha Fin: {{ curso.fechaFin | date:'short' }}
+        </li>
+      </ul>
+    </div>
   </form>
 
-  <div *ngIf="mensaje">{{ mensaje }}</div>
 
+    <!-- Inscribir y eliminar -->
+    <h2>Inscribir o Eliminar Alumno</h2>
+  <form>
 
+    <!-- Campo para ingresar el ID del alumno -->
+    <input type="number" [(ngModel)]="alumnoId" placeholder="ID del Alumno para Inscripción/Eliminación" name="inscripcionId" required />
 
+    <input type="text" [(ngModel)]="cursoIds" placeholder="IDs de Cursos (separados por comas)" name="cursoIdsInput" />
 
-  <div>
-    <h1>Actualizar Alumno(datos personales)</h1>
+    <button (click)="inscribirseCurso()">Inscribir en Cursos</button>
 
-    <form (ngSubmit)="actualizarAlumno()">
-      <div>
-        <label for="id">ID:</label>
-        <input type="number" id="id" [(ngModel)]="alumnoActualizar.id" name="id" required />
-      </div>
-      <div>
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" [(ngModel)]="alumnoActualizar.nombre" name="nombre" required />
-      </div>
-      <div>
-        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-        <input type="date" id="fechaNacimiento" [(ngModel)]="alumnoActualizar.fechaNacimiento" name="fechaNacimiento" required />
-      </div>
-      <button type="submit">Actualizar Alumno</button>
-    </form>
+    <button (click)="eliminarAlumno()">Eliminar Alumno</button>
 
-    <div *ngIf="mensaje">{{ mensaje }}</div>
-  </div>
+    <div *ngIf="errorMessage">{{ errorMessage }}</div>
 
-
-  <div>
-    <h1>Inscribir Alumno en Cursos</h1>
-
-    <form (ngSubmit)="inscribirseCurso()">
-      <div>
-        <label for="alumnoId">ID del Alumno:</label>
-        <input type="number" id="alumnoId" [(ngModel)]="alumnoId" name="alumnoId" required />
-      </div>
-      <div>
-        <label for="cursoIds">IDs de Cursos (separados por comas):</label>
-        <input type="text" id="cursoIds" [(ngModel)]="cursoIds" name="cursoIdsInput" required />
-        <small>Ejemplo: 1,2,3</small>
-      </div>
-      <button type="submit">Inscribir</button>
-    </form>
-
-    <div *ngIf="mensaje">{{ mensaje }}</div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-  </div>
-
-  <div>
-    <h1>Eliminar Alumno</h1>
-
-    <form (ngSubmit)="eliminarAlumno()">
-      <div>
-        <label for="alumnoId">ID del Alumno:</label>
-        <input type="number" id="alumnoId" [(ngModel)]="alumnoId" name="alumnoId" required />
-      </div>
-      <button type="submit">Eliminar</button>
-    </form>
-
-    <div *ngIf="mensaje">{{ mensaje }}</div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-  </div>
+   </form>
 
 
 </div>

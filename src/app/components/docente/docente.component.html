@@ -5,97 +5,79 @@
 
   <div *ngIf="errorMessage">{{ errorMessage }}</div>
 
+  <div *ngIf="mensaje">{{ mensaje }}</div>
+
   <!-- Botón para mostrar el dropdown -->
   <button class="dropbtn" (click)="isDropdownOpen = !isDropdownOpen">Ver lista de docentes</button>
 
   <div class="dropdown" *ngIf="isDropdownOpen">
-  <ul>
-    <li *ngFor="let docente of docentes">
-      {{ docente.nombre }} | Legajo: {{ docente.legajo }}
-      <h5>CURSOS QUE DICTA:</h5>
-      <ul *ngFor="let curso of docente.cursos">
-        <span><strong>ID: </strong>{{curso.id}}</span>
-        <h4><strong>TEMA</strong></h4>
-        <span>ID tema:{{curso.tema.id}}</span> |
-        <span>nombre tema: {{curso.tema.nombre}}</span>
-
-      </ul>
-
-    </li>
-  </ul>
+    <ul>
+      <li *ngFor="let docente of docentes">
+        {{ docente.nombre }} | Legajo: {{ docente.legajo }}
+        <h5>CURSOS QUE DICTA:</h5>
+        <ul *ngFor="let curso of docente.cursos">
+          <span><strong>ID:</strong> {{curso.id}}</span>
+          <h4><strong>TEMA</strong></h4>
+          <span>ID tema: {{curso.tema.id}}</span> |
+          <span>Nombre tema: {{curso.tema.nombre}}</span>
+        </ul>
+      </li>
+    </ul>
   </div>
 
   <h2>Buscar Docente por ID</h2>
   <input type="number" #docenteId placeholder="Ingrese Legajo del Docente">
   <button (click)="loadDocenteById(+docenteId.value)">Buscar</button>
-  @if(docente){
-    <div>
-      <h4>{{ docente.nombre }} legajo: {{ docente.legajo }} </h4>
-      <h5>CURSOS QUE DICTA:</h5>
-      <ul *ngFor="let curso of docente.cursos">
-        <span><strong>ID: </strong>{{curso.id}}</span>
-        <h4><strong>TEMA</strong></h4>
-        <span>ID tema:{{curso.tema.id}}</span> |
-        <span>nombre tema: {{curso.tema.nombre}}</span>
 
-      </ul>
-    </div>
-  }
+  <!-- Mostrar información del docente encontrado -->
+  <div *ngIf="docente">
+    <h4>{{ docente.nombre }} | Legajo: {{ docente.legajo }}</h4>
+    <h5>CURSOS QUE DICTA:</h5>
+    <ul *ngFor="let curso of docente.cursos">
+      <span><strong>ID:</strong> {{curso.id}}</span>
+      <h4><strong>TEMA</strong></h4>
+      <span>ID tema: {{curso.tema.id}}</span> |
+      <span>Nombre tema: {{curso.tema.nombre}}</span>
+    </ul>
+  </div>
 
-  <h1>Registrar Nuevo Docente</h1>
+  <!-- Formulario para Registrar y Modificar Docentes -->
+  <h1>Registrar o Modificar Docentes</h1>
 
   <form (ngSubmit)="guardarDocente()">
     <div>
       <label for="legajo">Legajo:</label>
-      <input type="number" id="legajo" [(ngModel)]="nuevoDocente.legajo" name="legajo" required />
+      <input type="number" [(ngModel)]="nuevoDocente.legajo" name="legajo" required />
     </div>
     <div>
       <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" [(ngModel)]="nuevoDocente.nombre" name="nombre" required />
+      <input type="text" [(ngModel)]="nuevoDocente.nombre" name="nombre" required />
     </div>
+
+    <!-- Botón para guardar nuevo docente -->
     <button type="submit">Guardar Docente</button>
-  </form>
 
-  <div *ngIf="mensaje">{{ mensaje }}</div>
+    <!-- Formulario para modificar datos -->
+    <div>
+      <label for="legajoModificar">Legajo del Docente a Modificar:</label>
+      <input type="number" [(ngModel)]="legajoModificar" name="legajoModificar" required />
 
+      <label for="nombreModificar">Nuevo Nombre:</label>
+      <input type="text" [(ngModel)]="nombreModificar" name="nombreModificar" required />
 
+      <!-- Botón para modificar datos -->
+      <button (click)="modificarDocente()">Modificar</button>
+    </div>
 
-  <div>
-    <h1>Modificar Datos del Docente</h1>
+    <!-- Formulario para eliminar un docente -->
+    <div>
+      <label for="docenteIdEliminar">ID del Docente a Eliminar:</label>
+      <input type="number" [(ngModel)]="docenteIdEliminar" name="docenteIdEliminar" required />
 
-    <form (ngSubmit)="modificarDocente()">
-      <div>
-        <label for="legajo">Legajo del Docente:</label>
-        <input type="number" id="legajo" [(ngModel)]="legajo" name="legajo" required />
-      </div>
-      <div>
-        <label for="nombre">Nuevo Nombre:</label>
-        <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre" required />
-      </div>
-      <button type="submit">Modificar</button>
-    </form>
+      <!-- Botón para eliminar un docente -->
+      <button (click)="eliminarDocente()">Eliminar</button>
+    </div>
 
-    <div *ngIf="mensaje">{{ mensaje }}</div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-  </div>
-
-
-
-
-  <div>
-    <h1>Eliminar Docente</h1>
-
-    <form (ngSubmit)="eliminarDocente()">
-      <div>
-        <label for="docenteId">ID del Docente:</label>
-        <input type="number" id="docenteId" [(ngModel)]="docenteId" name="docenteId" required />
-      </div>
-      <button type="submit">Eliminar</button>
-    </form>
-
-    <div *ngIf="mensaje">{{ mensaje }}</div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-  </div>
-
+   </form>
 
 </div>

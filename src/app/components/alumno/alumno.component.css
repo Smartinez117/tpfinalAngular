@@ -66,3 +66,6 @@ div {
   border-radius: 5px; /* Bordes redondeados*/
 }
 
+.pointer{
+  cursor: pointer;
+}

@@ -1,3 +1,4 @@
+import { CursoModificarComponent } from './components/curso-modificar/curso-modificar.component';
 import { Routes } from '@angular/router';
 import { AlumnoComponent } from './components/alumno/alumno.component'; // Ajusta la ruta según tu estructura
 import { CursoComponent } from './components/curso/curso.component'; // Ajusta la ruta según tu estructura
@@ -9,5 +10,6 @@ export const routes: Routes = [
   { path: 'cursos', component: CursoComponent },
   { path: 'docentes', component: DocenteComponent },
   { path: 'temas', component: TemaComponent },
+  { path: 'modificarCurso', component: CursoModificarComponent},
   { path: '', redirectTo: '/alumno', pathMatch: 'full' }, // Redirigir a 'alumno' por defecto
 ];

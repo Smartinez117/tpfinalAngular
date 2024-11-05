@@ -1,91 +1,94 @@
-/* Estilos generales para la lista de cursos */
+/* Estilo general para el contenedor */
+.container {
+  max-width: 800px; /* Ancho máximo */
+  margin: 0 auto; /* Centrar horizontalmente */
+  padding: 20px; /* Espaciado interno */
+  background-color: #f9f9f9; /* Color de fondo */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilo para los encabezados */
+.title, h1, h2 {
+  color: #4a90e2; /* Color azul para encabezados */
+  text-align: center; /* Centrar texto */
+}
+
+/* Estilo para los botones */
+.btn {
+  background-color: #5cb85c; /* Color de fondo del botón */
+  color: white; /* Color del texto del botón */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  padding: 10px 15px; /* Espaciado interno */
+  cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+  transition: background-color 0.3s; /* Efecto de transición */
+  margin-top: 15px; /* Espacio superior para separación */
+
+}
+
+.btn:hover {
+  background-color: #4cae4c; /* Color al pasar el mouse */
+}
+
+/* Estilo para listas */
+ul {
+  list-style-type: none; /* Sin viñetas */
+  padding: 0; /* Sin espaciado interno */
+}
+
 .cursos-list {
-  list-style-type: none;
-  padding: 10px;
+  margin-top: 10px;
 }
 
 .curso-item {
-  border: 2px solid #4a90e2; /* Borde azul */
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  background-color: #f0f8ff; /* Fondo suave */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para realce */
-  max-width: 700px;
-  /*transition: transform 0.2s; /* Animación al pasar el ratón */
+  padding: 10px; /* Espaciado interno en cada elemento de la lista */
+  border-bottom: 1px solid #ddd; /* Línea divisoria entre elementos */
 }
 
-.curso-item:hover {
-  transform: scale(1.02); /* Escala ligera al pasar el ratón */
+.curso-item:last-child {
+  border-bottom: none; /* Sin línea en el último elemento */
 }
 
-/* Sección de cada bloque de información */
+/* Estilo para mensajes de error y éxito */
+.error {
+  color: red; /* Color rojo para mensajes de error */
+}
+
+/* Estilo específico para las secciones de cursos y temas */
 .curso-info, .curso-tema, .curso-docente, .curso-alumnos {
-  margin-top: 10px;
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
-.curso-info {
-  background-color: #71acf0; /* Fondo azul claro */
+/* Estilo para buscar curso */
+.buscar-curso {
+  margin-top: 20px;
 }
 
-.curso-tema {
-  background-color: #71acf0; /* Fondo rosado claro */
+/* Estilo para los elementos dentro del dropdown */
+.dropdown {
+    margin-top: 10px;
 }
 
-.curso-docente {
-  background-color: #71acf0; /* Fondo verde claro */
+.dropdown-fecha {
+    margin-top: 20px;
 }
 
-.curso-alumnos {
-  background-color: #71acf0; /* Fondo naranja claro */
+/* Estilo para los elementos de los alumnos inscritos en los cursos */
+.alumnos-curso {
+    list-style-type: none; /* Sin viñetas en la lista de alumnos inscritos */
 }
 
-/* Encabezado de cada sección */
-.curso-tema h3, .curso-docente h3, .curso-alumnos h3 {
-  margin-bottom: 8px;
-  color: #333;
-  font-size: 1.1em;
-  border-bottom: 2px solid #ddd; /* Línea inferior */
-  padding-bottom: 5px;
+/* Estilos para ingresar un nuevo curso o tema */
+input[type="number"], input[type="text"], input[type="date"], textarea {
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: calc(100% - 16px); /* Ajustar el ancho del input al contenedor con margen incluido */
 }
 
-.curso-info span, .curso-tema span, .curso-docente span, .alumno-curso-item span {
-  margin-right: 10px;
-  font-weight: bold;
-  color: #555;
-}
-
-/* Lista de alumnos y estilo de cada item */
-.curso-alumnos ul {
-  padding-left: 20px;
-}
-
-
-/* Estilo para los botones */
-.btn, .dropbtn {
-  background-color: #4a90e2;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1em;
-  transition: background-color 0.3s;
-  margin: 5px 0;
-}
-
-.btn:hover, .dropbtn:hover {
-  background-color: #357abd; /* Cambio de color al pasar el ratón */
-}
-
-/* Estilo para el título */
-.title {
-  color: #4a90e2;
-  font-family: 'Arial', sans-serif;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 20px;
+label {
+    margin-top: 10px;
+    text-align: left; /* Alinear etiquetas a la izquierda */
 }

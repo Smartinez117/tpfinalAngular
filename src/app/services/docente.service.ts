@@ -35,12 +35,12 @@ export class DocenteService {
         nombre: nombre // Nuevo nombre del docente
       };
 
-      return this.http.put<any>(`${baseUrl}/${legajo}`, body);
+      return this.http.put<any>(`${baseUrl}${legajo}`, body);
     }
 
     // Método para eliminar un docente
     public eliminarDocente(docenteId: number): Observable<any> {
-      return this.http.delete<any>(`${baseUrl}/${docenteId}`);
+      return this.http.delete<any>(`${baseUrl}${docenteId}`);
     }
 
 }

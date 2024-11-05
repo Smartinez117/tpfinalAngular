@@ -8,112 +8,88 @@ import { Docente } from '../../models/docente.model'; // Ajusta la ruta según t
 @Component({
   selector: 'app-docente',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './docente.component.html',
-  styleUrl: './docente.component.css'
+  styleUrls: ['./docente.component.css']
 })
 export class DocenteComponent implements OnInit {
   docentes: Docente[] = []; // Para almacenar todos los docentes
   docente!: Docente; // Para almacenar un docente específico
   errorMessage: string = ''; // Para manejar errores
-  docenteId:number =0;
-
-  nombre:string = '';
-  legajo:number =0;
-
-  //guardar un nuevo docente.
-  nuevoDocente: Docente = { legajo: 0, nombre: '',cursos:[] }; // Inicializa el objeto docente
   mensaje: string = ''; // Para mostrar mensajes al usuario
 
-  isDropdownOpen = false; // Estado del dropdown
-  isDropdownCursoOpen = false; // Estado del dropdown para docente del curso
+  nuevoDocente: Docente = { legajo: 0, nombre: '', cursos: [] }; // Inicializa el objeto docente
+  legajoModificar: number = 0;
+  nombreModificar: string = '';
+  docenteIdEliminar: number = 0;
 
-  constructor(private docenteService: DocenteService) { }
+  isDropdownOpen = false; // Estado del dropdown
+
+  constructor(private docenteService: DocenteService) {}
 
   ngOnInit(): void {
-    //this.loadAllDocentes(); // Cargar todos los docentes al inicializar
+    this.loadAllDocentes(); // Cargar todos los docentes al inicializar
   }
 
-  // Método para cargar todos los docentes
   loadAllDocentes(): void {
     this.docenteService.getAll().subscribe({
-      next: (data) => {
-        this.docentes = data; // Asignar los datos recibidos a la variable docentes
-      },
-      error: (error) => {
-        console.error('Error al cargar todos los docentes:', error);
-        this.errorMessage = 'No se pudieron cargar los docentes.';
-      }
+      next: (data) => this.docentes = data,
+      error: () => this.errorMessage = 'No se pudieron cargar los docentes.'
     });
   }
 
-  // Método para cargar un docente por ID
   loadDocenteById(id: number): void {
     this.docenteService.getById(id).subscribe({
       next: (data) => {
-        this.docente = data; // Asignar el docente recibido a la variable docente
+        this.docente = data;
+        this.legajoModificar = data.legajo; // Cargar legajo para modificación
+        this.nombreModificar = data.nombre; // Cargar nombre para modificación
       },
-      error: (error) => {
-        console.error('Error al cargar el docente por ID:', error);
-        this.errorMessage = 'No se pudo cargar el docente.';
-      }
+      error: () => this.errorMessage = 'No se pudo cargar el docente.'
     });
   }
 
-    // Método para guardar el nuevo docente
-    guardarDocente(): void {
-      this.docenteService.guardarDocente(this.nuevoDocente).subscribe({
-        next: (data) => {
-          this.mensaje = 'Docente guardado exitosamente!';
-          this.nuevoDocente = { legajo: 0, nombre: '',cursos:[] }; // Reiniciar formulario
-        },
-        error: (error) => {
-          console.error('Error al guardar el docente:', error);
-          this.mensaje = 'Error al guardar el docente.';
-        }
-      });
-    }
+  guardarDocente(): void {
+    this.docenteService.guardarDocente(this.nuevoDocente).subscribe({
+      next: () => {
+        this.mensaje = 'Docente guardado exitosamente!';
+        this.nuevoDocente = { legajo: 0, nombre: '', cursos: [] }; // Reiniciar formulario
+        this.loadAllDocentes(); // Recargar la lista
+      },
+      error: () => this.errorMessage = 'Error al guardar el docente.'
+    });
+  }
 
-
-  // Método para modificar los datos del docente
   modificarDocente(): void {
-    if (!this.legajo || !this.nombre) {
+    if (!this.legajoModificar || !this.nombreModificar) {
       this.errorMessage = 'Por favor, ingrese un legajo y un nombre válidos.';
       return;
     }
 
-    this.docenteService.modificarDocente(this.legajo, this.nombre).subscribe({
-      next: (data) => {
+    this.docenteService.modificarDocente(this.legajoModificar, this.nombreModificar).subscribe({
+      next: () => {
         this.mensaje = 'Datos del docente modificados exitosamente!';
-        this.legajo = 0; // Reiniciar legajo
-        this.nombre = ''; // Reiniciar nombre
+        this.legajoModificar = 0; // Reiniciar legajo
+        this.nombreModificar = ''; // Reiniciar nombre
+        this.loadAllDocentes(); // Recargar la lista
       },
-      error: (error) => {
-        console.error('Error al modificar los datos del docente:', error);
-        this.errorMessage = 'Error al modificar los datos. Detalles: ' + error.message;
-      }
+      error: () => this.errorMessage = 'Error al modificar los datos.'
     });
   }
 
-
-
- // Método para eliminar un docente
- eliminarDocente(): void {
-  if (!this.docenteId) {
-    this.errorMessage = 'Por favor, ingrese un ID de docente válido.';
-    return;
-  }
-
-  this.docenteService.eliminarDocente(this.docenteId).subscribe({
-    next: (data) => {
-      this.mensaje = 'Docente eliminado exitosamente!';
-      this.docenteId = 0; // Reiniciar ID del docente
-    },
-    error: (error) => {
-      console.error('Error al eliminar al docente:', error);
-      this.errorMessage = 'Error al eliminar al docente. Detalles: ' + error.message;
+  eliminarDocente(): void {
+    if (!this.docenteIdEliminar) {
+      this.errorMessage = 'Por favor, ingrese un ID de docente válido.';
+      return;
     }
-  });
-}
 
+    this.docenteService.eliminarDocente(this.docenteIdEliminar).subscribe({
+      next: () => {
+        this.mensaje = 'Docente eliminado exitosamente!';
+        this.docenteIdEliminar = 0; // Reiniciar ID del docente
+        this.loadAllDocentes(); // Recargar la lista
+      },
+      error: () => this.errorMessage = 'Error al eliminar al docente.'
+    });
+  }
 }

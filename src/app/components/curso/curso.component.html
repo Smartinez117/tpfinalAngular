@@ -6,34 +6,29 @@
   <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
   <!-- Botón para mostrar el dropdown -->
-  <button class="dropbtn" (click)="isDropdownOpen = !isDropdownOpen">Ver Cursos</button>
+  <button class="dropbtn" (click)="toggleDropdown()">Ver Cursos</button>
 
   <!-- Dropdown que muestra la lista de cursos -->
   <div class="dropdown" *ngIf="isDropdownOpen">
     <ul class="cursos-list">
       <li *ngFor="let curso of cursos" class="curso-item">
-        <!-- Div para encapsular el curso -->
         <div class="curso-info">
           <span><strong>ID Curso:</strong> {{ curso.id }}</span> |
           <span><strong>Precio:</strong> {{ curso.precio }}</span> |
-          <span>fecha de inicio:{{curso.fechaInicio | date:'short'}}</span> |
-          <span>fehcha de finalizacion:  {{curso.fechaFin | date:'short'}}</span>
+          <span>Fecha de Inicio: {{ curso.fechaInicio | date:'short' }}</span> |
+          <span>Fecha de Finalización: {{ curso.fechaFin | date:'short' }}</span>
         </div>
-        <!-- Div para encapsular la información del tema -->
         <div class="curso-tema">
           <h3>Tema</h3>
           <span><strong>ID Tema:</strong> {{ curso.tema.id }}</span> |
           <span><strong>Nombre:</strong> {{ curso.tema.nombre }}</span> |
           <span><strong>Descripción:</strong> {{ curso.tema.descripcion }}</span>
         </div>
-
-        <!-- Div para encapsular la información del docente -->
         <div class="curso-docente">
           <h3>Docente</h3>
           <span><strong>Legajo:</strong> {{ curso.docente.legajo }}</span> |
           <span><strong>Nombre:</strong> {{ curso.docente.nombre }}</span>
         </div>
-        <!-- Div para encapsular la lista de alumnos -->
         <div class="curso-alumnos">
           <h3>Alumnos Inscritos</h3>
           <ul>
@@ -47,59 +42,71 @@
     </ul>
   </div>
 
-  <h2>Buscar Curso por ID</h2>
-  <input type="number" #cursoId placeholder="Ingrese ID del Curso" />
-  <button class="btn" (click)="loadCursoById(+cursoId.value)">Buscar</button>
+  <!-- Formulario para buscar cursos -->
+  <h2>Búsqueda de Cursos</h2>
+  <div class="buscar-curso">
+    <input type="number" #cursoId placeholder="Ingrese ID del Curso" />
+    <button class="btn" (click)="loadCursoById(+cursoId.value)">Buscar por ID</button>
 
+    <input type="date" #fecha placeholder="yyyy-mm-dd" />
+    <button class="btn" (click)="loadCursosPorFecha(fecha.value)">Cargar Cursos por Fecha</button>
+  </div>
+
+  <!-- Mostrar resultados de búsqueda -->
   <div *ngIf="curso" class="curso-item">
-    <h4> (ID DE CURSO: {{ curso.id }})</h4>
+    <h4>(ID DE CURSO: {{ curso.id }})</h4>
+    <!-- Detalles del curso -->
+    <div class="curso-tema">
+      <h3>Tema</h3>
+      <span><strong>ID Tema:</strong> {{ curso.tema.id }}</span> |
+      <span><strong>Nombre:</strong> {{ curso.tema.nombre }}</span> |
+      <span><strong>Descripción:</strong> {{ curso.tema.descripcion }}</span>
+    </div>
 
-    <h3>Tema</h3>
-    <span><strong>ID Tema:</strong> {{ curso.tema.id }}</span> |
-    <span><strong>Nombre:</strong> {{ curso.tema.nombre }}</span> |
-    <span><strong>Descripción:</strong> {{ curso.tema.descripcion }}</span>
-
-    <h3>Docente</h3>
-    <span><strong>Legajo:</strong> {{ curso.docente.legajo }}</span> |
-    <span><strong>Nombre:</strong> {{ curso.docente.nombre }}</span>
+    <div class="curso-docente">
+      <h3>Docente</h3>
+      <span><strong>Legajo:</strong> {{ curso.docente.legajo }}</span> |
+      <span><strong>Nombre:</strong> {{ curso.docente.nombre }}</span>
+    </div>
 
     <p>Precio: {{ curso.precio }}</p>
     <p>Fecha Inicio: {{ curso.fechaInicio | date:'short' }}</p>
     <p>Fecha Fin: {{ curso.fechaFin | date:'short' }}</p>
+
+    <!-- Alumnos inscritos -->
     <h5><strong>Alumnos inscritos:</strong></h5>
     <ul class="alumnos-curso">
       <li *ngFor="let alumno of curso.alumnos" class="alumno-curso-item">
-        ID Alumno: {{ alumno.id }} , Nombre: {{ alumno.nombre }}
+        ID Alumno: {{ alumno.id }}, Nombre: {{ alumno.nombre }}
       </li>
     </ul>
   </div>
 
-  <h2>Cursos que finalizan en una fecha específica</h2>
-  <input type="date" #fecha placeholder="yyyy-mm-dd" />
-  <button class="btn" (click)="loadCursosPorFecha(fecha.value)">Cargar Cursos por Fecha</button>
-
-  <!-- Botón para mostrar el dropdown -->
-  <button class="dropbtn" (click)="isDropdownOpen = !isDropdownOpen">Ver Cursos</button>
-
- <div class="dropdown" *ngIf="isDropdownOpen">
-  <div *ngIf="cursosPorFecha && cursosPorFecha.length > 0">
-    <h3>Lista de Cursos</h3>
+  <!-- Dropdown para cursos por fecha -->
+  <div *ngIf="cursosPorFecha.length > 0" class="dropdown-fecha">
+    <h3>Cursos que finalizan en una fecha específica</h3>
     <div *ngFor="let curso of cursosPorFecha" class="curso-item">
-      <h4>DATOS DEL CURSO</h4>
-      <P>ID : {{ curso.id }}</P>
+      <h4>(ID DE CURSO: {{ curso.id }})</h4>
+      <!-- Detalles del curso -->
+      <div class="curso-tema">
+        <h3>Tema</h3>
+        <span><strong>ID Tema:</strong> {{ curso.tema.id }}</span> |
+        <span><strong>Nombre:</strong> {{ curso.tema.nombre }}</span> |
+        <span><strong>Descripción:</strong> {{ curso.tema.descripcion }}</span>
+      </div>
+
+      <div class="curso-docente">
+        <h3>Docente</h3>
+        <span><strong>Legajo:</strong> {{ curso.docente.legajo }}</span> |
+        <span><strong>Nombre:</strong> {{ curso.docente.nombre }}</span>
+      </div>
+
       <p>Precio: {{ curso.precio }}</p>
       <p>Fecha Inicio: {{ curso.fechaInicio | date:'short' }}</p>
       <p>Fecha Fin: {{ curso.fechaFin | date:'short' }}</p>
-      <h3>TEMA DEL CURSO</h3>
-      <span><strong>ID Tema:</strong> {{ curso.tema.id }}</span> |
-      <span><strong>Nombre:</strong> {{ curso.tema.nombre }}</span> |
-      <span><strong>Descripción:</strong> {{ curso.tema.descripcion }}</span>
 
-      <h3>DOCENTE DEL CURSO</h3>
-      <span><strong>Legajo:</strong> {{ curso.docente.legajo }}</span> |
-      <span><strong>Nombre:</strong> {{ curso.docente.nombre }}</span>
-
-      <h4><strong>Alumnos inscritos:</strong></h4>
+      <!-- Alumnos inscritos -->
+      <h5><strong>Alumnos inscritos:</strong></h5>
       <ul class="alumnos-curso">
         <li *ngFor="let alumno of curso.alumnos" class="alumno-curso-item">
           ID Alumno: {{ alumno.id }}, Nombre: {{ alumno.nombre }}
@@ -108,133 +115,10 @@
 
     </div>
   </div>
- </div>
 
-
-  <div *ngIf="cursos && cursos.length === 0">
-    <p>No se encontraron cursos para la fecha seleccionada.</p>
-  </div>
-
-  <div *ngIf="errorMessage">
-    <p>{{ errorMessage }}</p>
-  </div>
-
-  <div>
-    <h1>Registrar Nuevo Curso</h1>
-
-    <form (ngSubmit)="crearCurso()">
-      <div>
-        <label for="temaId">ID del Tema:</label>
-        <input type="number" id="temaId" [(ngModel)]="temaId" name="temaId" required />
-      </div>
-      <div>
-        <label for="fecha_inicio">Fecha de Inicio:</label>
-        <input type="date" id="fecha_inicio" [(ngModel)]="nuevoCurso.fechaInicio" name="fecha_inicio" required />
-      </div>
-      <div>
-        <label for="fecha_fin">Fecha de Finalización:</label>
-        <input type="date" id="fecha_fin" [(ngModel)]="nuevoCurso.fechaFin" name="fecha_fin" required />
-      </div>
-      <div>
-        <label for="precio">Precio:</label>
-        <input type="number" id="precio" [(ngModel)]="nuevoCurso.precio" name="precio" required />
-      </div>
-      <div>
-        <label for="docenteLegajo">Legajo del Docente:</label>
-        <input type="number" id="docenteLegajo" [(ngModel)]="docenteLegajo" name="docenteLegajo" required />
-      </div>
-      <button type="submit">Guardar Curso</button>
-    </form>
-
-    <div *ngIf="mensaje">{{ mensaje }}</div>
-  </div>
-
-
-
-  <div>
-    <h1>Actualizar Curso</h1>
-    <h4>porque corno no funciona??,porblema con las fechas</h4>
-
-    <form (ngSubmit)="actualizarCurso()">
-      <div>
-        <label for="id">ID del Curso:</label>
-        <input type="number" id="id" [(ngModel)]="cursoId" name="id" required />
-      </div>
-      <div>
-        <label for="fechaInicio">Fecha de Inicio:</label>
-        <input type="date" id="fechaInicio" name ="fechaInicio" (change)="NewItem.fechaInicio=fechaInicio.value"
-        class="form-control" [value]="NewItem.fechaInicio | date: 'yyyy-mm-dd'"
-        [ngModel]="NewItem.fechaInicio | date: 'yyyy-mm-dd' " #fechaInicio="ngModel" required />
-      </div>
-      <div>
-        <label for="fechaFin">Fecha de Finalización:</label>
-        <input type="date" id="fechaFin" [(ngModel)]="fechaFin" name="fechaFin" required />
-      </div>
-      <div>
-        <label for="precio">Precio:</label>
-        <input type="number" id="precio" [(ngModel)]="precio" name="precio" required />
-      </div>
-      <button type="submit">Actualizar Curso</button>
-    </form>
-
-    <div *ngIf="mensaje">{{ mensaje }}</div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-  </div>
-
-
-  <div>
-    <h1>Cambiar Docente del Curso</h1>
-    <h4>porque corno no funciona??,problemas con el id del curso</h4>
-
-    <form (ngSubmit)="cambiarDocente()">
-      <div>
-        <label for="id">ID del Curso:</label>
-        <input type="number" id="id" [(ngModel)]="cursoId" name="id" required />
-      </div>
-      <div>
-        <label for="docenteId">ID del Nuevo Docente:</label>
-        <input type="number" id="docenteId" [(ngModel)]="docenteLegajo" name="docenteId" required />
-      </div>
-      <button type="submit">Cambiar Docente</button>
-    </form>
-
-    <div *ngIf="mensaje">{{ mensaje }}</div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-  </div>
-
-
-  <div>
-    <h1>Cambiar Tema del Curso</h1>
-
-    <form (ngSubmit)="cambiarTema()">
-      <div>
-        <label for="id">ID del Curso:</label>
-        <input type="number" id="id" [(ngModel)]="cursoId" name="id" required />
-      </div>
-      <div>
-        <label for="temaId">ID del Nuevo Tema:</label>
-        <input type="number" id="temaId" [(ngModel)]="temaId" name="temaId" required />
-      </div>
-      <button type="submit">Cambiar Tema</button>
-    </form>
-
-    <div *ngIf="mensaje">{{ mensaje }}</div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-  </div>
-
-  <div>
-    <h1>Eliminar Curso</h1>
-
-    <form (ngSubmit)="eliminarCurso()">
-      <div>
-        <label for="cursoId">ID del Curso:</label>
-        <input type="number" id="cursoId" [(ngModel)]="cursoId" name="cursoId" required />
-      </div>
-      <button type="submit">Eliminar</button>
-    </form>
-
-    <div *ngIf="mensaje">{{ mensaje }}</div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  <!-- Mensaje si no hay cursos encontrados -->
+  <div *ngIf="cursosPorFecha.length === 0 && isDropdownFechaOpen">
+    No se encontraron cursos para la fecha seleccionada.
   </div>
 
 </div>

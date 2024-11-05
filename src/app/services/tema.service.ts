@@ -36,13 +36,13 @@ export class TemaService {
       descripcion: descripcion // Nueva descripción del tema
     };
 
-    return this.http.put<any>(`${baseUrl}/${legajo}`, body);
+    return this.http.put<any>(`${baseUrl}${legajo}`, body);
   }
 
 
   // Método para eliminar un tema
   public eliminarTema(temaId: number): Observable<any> {
-    return this.http.delete<any>(`${baseUrl}/${temaId}`);
+    return this.http.delete<any>(`${baseUrl}${temaId}`);
   }
 
 
