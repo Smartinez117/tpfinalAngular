@@ -1,6 +1,6 @@
 /* Estilo general para el contenedor */
 .container {
-  max-width: 800px; /* Ancho máximo */
+  max-width: 400px; /* Ancho máximo */
   margin: 0 auto; /* Centrar horizontalmente */
   padding: 20px; /* Espaciado interno */
   background-color: #f9f9f9; /* Color de fondo */
@@ -24,12 +24,19 @@
   cursor: pointer; /* Cambiar el cursor al pasar el mouse */
   transition: background-color 0.3s; /* Efecto de transición */
   margin-top: 15px; /* Espacio superior para separación */
-
+  display: block;
+  margin-left: auto; /* Margen izquierdo automático */
+  margin-right: auto; /* Margen derecho automático */
 }
 
 .btn:hover {
   background-color: #4cae4c; /* Color al pasar el mouse */
 }
+
+div {
+  text-align: center; /* Centra el texto dentro del div */
+}
+
 
 /* Estilo para listas */
 ul {
@@ -85,10 +92,38 @@ input[type="number"], input[type="text"], input[type="date"], textarea {
     margin-top: 5px;
     border-radius: 4px;
     border: 1px solid #ccc;
-    width: calc(100% - 16px); /* Ajustar el ancho del input al contenedor con margen incluido */
+    width: 30%; /* Ajusta el ancho del input según sea necesario */
+    display: block; /* Hacer que el input sea un bloque */
+    margin-left: auto; /* Margen izquierdo automático */
+    margin-right: auto; /* Margen derecho automático */
 }
 
 label {
     margin-top: 10px;
-    text-align: left; /* Alinear etiquetas a la izquierda */
+    text-align: center; /* Alinear etiquetas a la izquierda */
+}
+
+.tabla_cursos{
+  margin: 0 auto;
+  width: 80%;
+  border-collapse: collapse;
+}
+
+.tabla_cursos th, .tabla_cursos td {
+  padding: 4px; /* Espaciado interno en las celdas */
+  text-align: center; /* Centra el contenido de las celdas */
+}
+
+.tabla_cursos tr:hover {
+  background-color: #5cb85c;
+}
+
+.table {
+  width: 100%; /* Asegura que la tabla anidada ocupe todo el espacio disponible */
+}
+
+.tabla_alumnos{
+  margin: 0 auto;
+  width: 80%;
+  border-collapse: collapse;
 }

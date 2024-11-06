@@ -69,3 +69,22 @@ div {
 .pointer{
   cursor: pointer;
 }
+
+.tabla_alumnos{
+  margin: 0 auto;
+  width: 80%;
+  border-collapse: collapse;
+}
+
+.tabla_alumnos th, .tabla_alumnos td {
+  padding: 4px; /* Espaciado interno en las celdas */
+  text-align: center; /* Centra el contenido de las celdas */
+}
+
+.tabla_alumnos tr:hover {
+  background-color: #5cb85c;
+}
+
+.table {
+  width: 100%; /* Asegura que la tabla anidada ocupe todo el espacio disponible */
+}

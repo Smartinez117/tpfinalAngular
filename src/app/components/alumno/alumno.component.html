@@ -8,21 +8,45 @@
   <button class="dropbtn" (click)="isDropdownOpen = !isDropdownOpen">Ver Alumnos</button>
 
   <div class="dropdown" *ngIf="isDropdownOpen">
-    <ul>
-      <li *ngFor="let alumno of alumnos">
-        <h4><strong>{{ alumno.nombre }}</strong></h4>
-        ID: {{ alumno.id }}, Fecha de Nacimiento: {{ alumno.fechaNacimiento | date:'short' }}
-        <h4>Cursos:</h4>
-        <ul class="cursos-alumno">
-          <li *ngFor="let curso of alumno.cursos" class="curso-alumno-item">
-            ID Curso: {{ curso.id }} | Precio Curso: usd${{ curso.precio }} |
-            Fecha Inicio: {{ curso.fechaInicio | date:'short' }} |
-            Fecha Fin: {{ curso.fechaFin | date:'short' }}
-          </li>
-        </ul>
-      </li>
-    </ul>
+      <table border="1" class="tabla_alumnos">
+          <thead>
+              <tr>
+                  <th>Nombre</th>
+                  <th>ID</th>
+                  <th>Fecha de Nacimiento</th>
+                  <th>Cursos</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let alumno of alumnos">
+                  <td>{{ alumno.nombre }}</td>
+                  <td>{{ alumno.id }}</td>
+                  <td>{{ alumno.fechaNacimiento | date:'short' }}</td>
+                  <td>
+                      <table class="table mb-0">
+                          <thead>
+                              <tr>
+                                  <th>ID Curso</th>
+                                  <th>Precio Curso</th>
+                                  <th>Fecha Inicio</th>
+                                  <th>Fecha Fin</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let curso of alumno.cursos">
+                                  <td>{{ curso.id }}</td>
+                                  <td>usd${{ curso.precio }}</td>
+                                  <td>{{ curso.fechaInicio | date:'short' }}</td>
+                                  <td>{{ curso.fechaFin | date:'short' }}</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
   </div>
+
 
   <h2>Alumnos de un Curso</h2>
   <input type="number" #cursoId placeholder="Ingrese ID del Curso">
@@ -32,21 +56,44 @@
   <button class="dropbtn" (click)="isDropdownCursoOpen = !isDropdownCursoOpen">Ver Alumnos del Curso</button>
 
   <div class="dropdown" *ngIf="isDropdownCursoOpen">
-    <ul>
-      <li *ngFor="let alumno of alumnosDelCurso"> <!-- Asegúrate de que esta variable contenga los alumnos del curso -->
-        {{ alumno.nombre }} ,ID: {{ alumno.id }} ,fecha_nacimiento: {{ alumno.fechaNacimiento | date:'short' }}
-        <ul class="cursos-alumno">
-          <li *ngFor="let curso of alumno.cursos" class="curso-alumno-item">
-            <span>ID Curso: {{ curso.id }}</span>
-            <span>Precio Curso: usd${{ curso.precio }}</span>
-            <span>Fecha Inicio: {{ curso.fechaInicio | date:'short' }}</span>
-            <span>Fecha Fin: {{ curso.fechaFin | date:'short' }}</span>
-          </li>
-        </ul>
-      </li>
-    </ul>
+    <table border="1" class="tabla_alumnos">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>ID</th>
+          <th>Fecha de Nacimiento</th>
+          <th>Cursos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let alumno of alumnosDelCurso">
+          <td>{{ alumno.nombre }}</td>
+          <td>{{ alumno.id }}</td>
+          <td>{{ alumno.fechaNacimiento | date:'short' }}</td>
+          <td>
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th>ID del Curso  </th>
+                  <th>Precio Curso  </th>
+                  <th>Fecha Inicio  </th>
+                  <th>Fecha Fin  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let curso of alumno.cursos">
+                  <td>{{ curso.id }}</td>
+                  <td>usd${{ curso.precio }}</td>
+                  <td>{{ curso.fechaInicio | date:'short' }}</td>
+                  <td>{{ curso.fechaFin | date:'short' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-
 
 
 

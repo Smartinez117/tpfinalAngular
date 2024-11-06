@@ -87,3 +87,23 @@ button:hover {
 div {
   text-align: center;
 }
+
+.tabla_temas{
+  margin: 0 auto;
+  width: 80%;
+  border-collapse: collapse;
+}
+
+.tabla_temas th, .tabla_temas td {
+  padding: 4px; /* Espaciado interno en las celdas */
+  text-align: center; /* Centra el contenido de las celdas */
+}
+
+.tabla_temas tr:hover {
+  background-color: #5cb85c;
+}
+
+.table {
+  width: 100%; /* Asegura que la tabla anidada ocupe todo el espacio disponible */
+}
+

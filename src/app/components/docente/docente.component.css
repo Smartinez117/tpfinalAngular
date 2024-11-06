@@ -76,3 +76,25 @@ button:hover {
 div {
   text-align: center;
 }
+
+/*css de las tablas*/
+.tabla_docente {
+  margin: 0 auto; /* Centra la tabla horizontalmente */
+  width: 70%; /* Ajusta el ancho de la tabla según sea necesario */
+  border-collapse: collapse; /* Opcional: para eliminar espacios entre celdas */
+}
+
+.tabla_docente th, .tabla_docente td {
+  padding: 4px; /* Espaciado interno en las celdas */
+  text-align: center; /* Centra el contenido de las celdas */
+}
+
+/* Efecto hover */
+.tabla_docente tr:hover {
+  background-color: #5cb85c; /* Color de fondo al pasar el mouse */
+}
+
+.table {
+  width: 100%; /* Asegura que la tabla anidada ocupe todo el espacio disponible */
+}
+

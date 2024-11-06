@@ -6,44 +6,59 @@
   <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
   <!-- Botón para mostrar el dropdown -->
-  <button class="dropbtn" (click)="toggleDropdown()">Ver Cursos</button>
+  <button class="btn" (click)="toggleDropdown()">Ver Cursos</button>
 
-  <!-- Dropdown que muestra la lista de cursos -->
   <div class="dropdown" *ngIf="isDropdownOpen">
-    <ul class="cursos-list">
-      <li *ngFor="let curso of cursos" class="curso-item">
-        <div class="curso-info">
-          <span><strong>ID Curso:</strong> {{ curso.id }}</span> |
-          <span><strong>Precio:</strong> {{ curso.precio }}</span> |
-          <span>Fecha de Inicio: {{ curso.fechaInicio | date:'short' }}</span> |
-          <span>Fecha de Finalización: {{ curso.fechaFin | date:'short' }}</span>
-        </div>
-        <div class="curso-tema">
-          <h3>Tema</h3>
-          <span><strong>ID Tema:</strong> {{ curso.tema.id }}</span> |
-          <span><strong>Nombre:</strong> {{ curso.tema.nombre }}</span> |
-          <span><strong>Descripción:</strong> {{ curso.tema.descripcion }}</span>
-        </div>
-        <div class="curso-docente">
-          <h3>Docente</h3>
-          <span><strong>Legajo:</strong> {{ curso.docente.legajo }}</span> |
-          <span><strong>Nombre:</strong> {{ curso.docente.nombre }}</span>
-        </div>
-        <div class="curso-alumnos">
-          <h3>Alumnos Inscritos</h3>
-          <ul>
-            <li *ngFor="let alumno of curso.alumnos" class="alumno-curso-item">
-              <span><strong>ID Alumno:</strong> {{ alumno.id }}</span> |
-              <span><strong>Nombre:</strong> {{ alumno.nombre }}</span>
-            </li>
-          </ul>
-        </div>
-      </li>
-    </ul>
-  </div>
+    <table border="1" class="tabla_cursos">
+        <thead>
+            <tr>
+                <th>ID Curso</th>
+                <th>Precio</th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha de Finalización</th>
+                <th>Tema ID</th>
+                <th>Tema Nombre</th>
+                <th>Tema Descripción</th>
+                <th>Docente Legajo</th>
+                <th>Docente Nombre</th>
+                <th>Alumnos Inscritos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let curso of cursos">
+                <td>{{ curso.id }}</td>
+                <td>usd${{ curso.precio }}</td>
+                <td>{{ curso.fechaInicio | date:'short' }}</td>
+                <td>{{ curso.fechaFin | date:'short' }}</td>
+                <td>{{ curso.tema.id }}</td>
+                <td>{{ curso.tema.nombre }}</td>
+                <td>{{ curso.tema.descripcion }}</td>
+                <td>{{ curso.docente.legajo }}</td>
+                <td>{{ curso.docente.nombre }}</td>
+                <td>
+                  <table class="table_alumnos">
+                    <thead>
+                        <tr>
+                            <th>ID Alumno</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let alumno of curso.alumnos" class="alumno-curso-item">
+                            <td>{{ alumno.id }}</td>
+                            <td>{{ alumno.nombre }}</td>
+                        </tr>
+                    </tbody>
+                </table><!-- Fin tabla de alumnos -->
+                </td><!-- Fin celda alumnos -->
+            </tr><!-- Fin fila curso -->
+        </tbody><!-- Fin cuerpo tabla -->
+    </table><!-- Fin tabla principal -->
+</div><!-- Fin dropdown -->
 
   <!-- Formulario para buscar cursos -->
   <h2>Búsqueda de Cursos</h2>
+
   <div class="buscar-curso">
     <input type="number" #cursoId placeholder="Ingrese ID del Curso" />
     <button class="btn" (click)="loadCursoById(+cursoId.value)">Buscar por ID</button>
@@ -52,69 +67,104 @@
     <button class="btn" (click)="loadCursosPorFecha(fecha.value)">Cargar Cursos por Fecha</button>
   </div>
 
-  <!-- Mostrar resultados de búsqueda -->
-  <div *ngIf="curso" class="curso-item">
-    <h4>(ID DE CURSO: {{ curso.id }})</h4>
-    <!-- Detalles del curso -->
-    <div class="curso-tema">
-      <h3>Tema</h3>
-      <span><strong>ID Tema:</strong> {{ curso.tema.id }}</span> |
-      <span><strong>Nombre:</strong> {{ curso.tema.nombre }}</span> |
-      <span><strong>Descripción:</strong> {{ curso.tema.descripcion }}</span>
-    </div>
+<!-- Mostrar resultados de búsqueda -->
+<div *ngIf="curso" class="curso-item">
+  <table border="1" class="tabla_cursos">
+      <thead>
+          <tr>
+              <th>ID de Curso</th>
+              <th>Precio</th>
+              <th>Fecha de Inicio</th>
+              <th>Fecha de Fin</th>
+              <th>ID Tema</th>
+              <th>Nombre Tema</th>
+              <th>Descripción Tema</th>
+              <th>Legajo Docente</th>
+              <th>Nombre Docente</th>
+              <th>Alumnos Inscritos</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>{{ curso.id }}</td>
+              <td>usd{{ curso.precio }}</td>
+              <td>{{ curso.fechaInicio | date:'short' }}</td>
+              <td>{{ curso.fechaFin | date:'short' }}</td>
+              <td>{{ curso.tema.id }}</td>
+              <td>{{ curso.tema.nombre }}</td>
+              <td>{{ curso.tema.descripcion }}</td>
+              <td>{{ curso.docente.legajo }}</td>
+              <td>{{ curso.docente.nombre }}</td>
+              <td><!-- Lista de alumnos inscritos -->
+                <table class="table_alumnos">
+                  <thead>
+                      <tr>
+                          <th>ID Alumno</th>
+                          <th>Nombre</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let alumno of curso.alumnos" class="alumno-curso-item">
+                          <td>{{ alumno.id }}</td>
+                          <td>{{ alumno.nombre }}</td>
+                      </tr>
+                  </tbody>
+              </table><!-- Fin tabla de alumnos -->
+              </td><!-- Fin celda alumnos -->
+          </tr><!-- Fin fila curso -->
+      </tbody><!-- Fin cuerpo tabla -->
+  </table><!-- Fin tabla principal -->
+</div><!-- Fin div curso-item -->
 
-    <div class="curso-docente">
-      <h3>Docente</h3>
-      <span><strong>Legajo:</strong> {{ curso.docente.legajo }}</span> |
-      <span><strong>Nombre:</strong> {{ curso.docente.nombre }}</span>
-    </div>
-
-    <p>Precio: {{ curso.precio }}</p>
-    <p>Fecha Inicio: {{ curso.fechaInicio | date:'short' }}</p>
-    <p>Fecha Fin: {{ curso.fechaFin | date:'short' }}</p>
-
-    <!-- Alumnos inscritos -->
-    <h5><strong>Alumnos inscritos:</strong></h5>
-    <ul class="alumnos-curso">
-      <li *ngFor="let alumno of curso.alumnos" class="alumno-curso-item">
-        ID Alumno: {{ alumno.id }}, Nombre: {{ alumno.nombre }}
-      </li>
-    </ul>
-  </div>
-
-  <!-- Dropdown para cursos por fecha -->
-  <div *ngIf="cursosPorFecha.length > 0" class="dropdown-fecha">
-    <h3>Cursos que finalizan en una fecha específica</h3>
-    <div *ngFor="let curso of cursosPorFecha" class="curso-item">
-      <h4>(ID DE CURSO: {{ curso.id }})</h4>
-      <!-- Detalles del curso -->
-      <div class="curso-tema">
-        <h3>Tema</h3>
-        <span><strong>ID Tema:</strong> {{ curso.tema.id }}</span> |
-        <span><strong>Nombre:</strong> {{ curso.tema.nombre }}</span> |
-        <span><strong>Descripción:</strong> {{ curso.tema.descripcion }}</span>
-      </div>
-
-      <div class="curso-docente">
-        <h3>Docente</h3>
-        <span><strong>Legajo:</strong> {{ curso.docente.legajo }}</span> |
-        <span><strong>Nombre:</strong> {{ curso.docente.nombre }}</span>
-      </div>
-
-      <p>Precio: {{ curso.precio }}</p>
-      <p>Fecha Inicio: {{ curso.fechaInicio | date:'short' }}</p>
-      <p>Fecha Fin: {{ curso.fechaFin | date:'short' }}</p>
-
-      <!-- Alumnos inscritos -->
-      <h5><strong>Alumnos inscritos:</strong></h5>
-      <ul class="alumnos-curso">
-        <li *ngFor="let alumno of curso.alumnos" class="alumno-curso-item">
-          ID Alumno: {{ alumno.id }}, Nombre: {{ alumno.nombre }}
-        </li>
-      </ul>
-
-    </div>
-  </div>
+<!-- Dropdown para cursos por fecha -->
+<div *ngIf="cursosPorFecha.length > 0" class="dropdown-fecha">
+  <h3>Cursos que finalizan en una fecha específica</h3>
+  <table class="tabla_cursos">
+      <thead>
+          <tr>
+              <th>ID de Curso</th>
+              <th>Precio</th>
+              <th>Fecha de Inicio</th>
+              <th>Fecha de Fin</th>
+              <th>ID Tema</th>
+              <th>Nombre Tema</th>
+              <th>Descripción Tema</th>
+              <th>Legajo Docente</th>
+              <th>Nombre Docente</th>
+              <th>Alumnos Inscritos</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let curso of cursosPorFecha">
+              <td>{{ curso.id }}</td>
+              <td>usd{{ curso.precio }}</td>
+              <td>{{ curso.fechaInicio | date:'short' }}</td>
+              <td>{{ curso.fechaFin | date:'short' }}</td>
+              <td>{{ curso.tema.id }}</td>
+              <td>{{ curso.tema.nombre }}</td>
+              <td>{{ curso.tema.descripcion }}</td>
+              <td>{{ curso.docente.legajo }}</td>
+              <td>{{ curso.docente.nombre }}</td>
+              <td><!-- Tabla para alumnos inscritos -->
+                <table border="1" class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID Alumno</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let alumno of curso.alumnos" class="alumno-curso-item">
+                            <td>{{ alumno.id }}</td>
+                            <td>{{ alumno.nombre }}</td>
+                        </tr>
+                    </tbody>
+                </table><!-- Fin tabla de alumnos -->
+            </td><!-- Fin celda alumnos -->
+          </tr><!-- Fin fila curso -->
+      </tbody><!-- Fin cuerpo tabla -->
+  </table><!-- Fin tabla principal -->
+</div><!-- Fin dropdown-fecha -->
 
   <!-- Mensaje si no hay cursos encontrados -->
   <div *ngIf="cursosPorFecha.length === 0 && isDropdownFechaOpen">

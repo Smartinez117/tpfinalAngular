@@ -4,25 +4,45 @@
   <button (click)="loadAllDocentes()">Cargar Todos los Docentes</button>
 
   <div *ngIf="errorMessage">{{ errorMessage }}</div>
-
   <div *ngIf="mensaje">{{ mensaje }}</div>
 
   <!-- Botón para mostrar el dropdown -->
   <button class="dropbtn" (click)="isDropdownOpen = !isDropdownOpen">Ver lista de docentes</button>
 
   <div class="dropdown" *ngIf="isDropdownOpen">
-    <ul>
-      <li *ngFor="let docente of docentes">
-        {{ docente.nombre }} | Legajo: {{ docente.legajo }}
-        <h5>CURSOS QUE DICTA:</h5>
-        <ul *ngFor="let curso of docente.cursos">
-          <span><strong>ID:</strong> {{curso.id}}</span>
-          <h4><strong>TEMA</strong></h4>
-          <span>ID tema: {{curso.tema.id}}</span> |
-          <span>Nombre tema: {{curso.tema.nombre}}</span>
-        </ul>
-      </li>
-    </ul>
+      <table border="1" class="tabla_docente">
+          <thead>
+              <tr>
+                  <th>Nombre</th>
+                  <th>Legajo</th>
+                  <th>Cursos que Dicta</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let docente of docentes">
+                  <td>{{ docente.nombre }}</td>
+                  <td>{{ docente.legajo }}</td>
+                  <td>
+                      <table class="table mb-0">
+                          <thead>
+                              <tr>
+                                  <th>ID Curso</th>
+                                  <th>Tema ID</th>
+                                  <th>Nombre Tema</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let curso of docente.cursos">
+                                  <td>{{ curso.id }}</td>
+                                  <td>{{ curso.tema.id }}</td>
+                                  <td>{{ curso.tema.nombre }}</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
   </div>
 
   <h2>Buscar Docente por ID</h2>
@@ -31,15 +51,41 @@
 
   <!-- Mostrar información del docente encontrado -->
   <div *ngIf="docente">
-    <h4>{{ docente.nombre }} | Legajo: {{ docente.legajo }}</h4>
-    <h5>CURSOS QUE DICTA:</h5>
-    <ul *ngFor="let curso of docente.cursos">
-      <span><strong>ID:</strong> {{curso.id}}</span>
-      <h4><strong>TEMA</strong></h4>
-      <span>ID tema: {{curso.tema.id}}</span> |
-      <span>Nombre tema: {{curso.tema.nombre}}</span>
-    </ul>
-  </div>
+      <table border="1" class="tabla_docente">
+          <thead>
+              <tr>
+                  <th>Nombre</th>
+                  <th>Legajo</th>
+                  <th>Cursos que Dicta</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>{{ docente.nombre }}</td>
+                  <td>{{ docente.legajo }}</td>
+                  <td>
+                      <!-- Tabla anidada para cursos -->
+                      <table class="table mb-0">
+                          <thead>
+                              <tr>
+                                  <th>ID Curso</th>
+                                  <th>Tema ID</th>
+                                  <th>Nombre Tema</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let curso of docente.cursos">
+                                  <td>{{ curso.id }}</td>
+                                  <td>{{ curso.tema.id }}</td>
+                                  <td>{{ curso.tema.nombre }}</td>
+                              </tr>
+                          </tbody>
+                      </table><!-- Fin tabla anidada -->
+                  </td><!-- Fin celda cursos -->
+              </tr><!-- Fin fila docente -->
+          </tbody><!-- Fin cuerpo tabla -->
+      </table><!-- Fin tabla principal -->
+  </div><!-- Fin div docente -->
 
   <!-- Formulario para Registrar y Modificar Docentes -->
   <h1>Registrar o Modificar Docentes</h1>

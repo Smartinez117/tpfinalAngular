@@ -6,34 +6,84 @@
 
   <button class="dropbtn" (click)="isDropdownOpen = !isDropdownOpen">Ver lista de temas</button>
   <div class="dropdown" *ngIf="isDropdownOpen">
-    <ul>
-      <li *ngFor="let tema of temas">
-        <h4>TEMA</h4>
-        nombre: {{ tema.nombre }} | ID: {{ tema.id }} | descripcion: {{ tema.descripcion }}
-        <h4>cursos donde se dicta:</h4>
-        <ul *ngFor="let curso of tema.cursos">
-          <span>id: {{ curso.id }}</span> |
-          <span>fecha de inicio: {{ curso.fechaInicio | date:'short' }}</span> |
-          <span>fecha de finalizacion: {{ curso.fechaFin | date:'short' }}</span>
-        </ul>
-      </li>
-    </ul>
-  </div>
+      <table border="1" class="tabla_temas">
+          <thead>
+              <tr>
+                  <th>ID Tema</th>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Cursos donde se dicta</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let tema of temas">
+                  <td>{{ tema.id }}</td>
+                  <td>{{ tema.nombre }}</td>
+                  <td>{{ tema.descripcion }}</td>
+                  <td><!-- Tabla para cursos donde se dicta -->
+                      <table class="table mb-0">
+                          <thead>
+                              <tr>
+                                  <th>ID Curso</th>
+                                  <th>Fecha de Inicio</th>
+                                  <th>Fecha de Finalización</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let curso of tema.cursos">
+                                  <td>{{ curso.id }}</td>
+                                  <td>{{ curso.fechaInicio | date:'short' }}</td>
+                                  <td>{{ curso.fechaFin | date:'short' }}</td>
+                              </tr><!-- Fin fila curso -->
+                          </tbody><!-- Fin cuerpo tabla de cursos -->
+                      </table><!-- Fin tabla de cursos -->
+                  </td><!-- Fin celda cursos -->
+              </tr><!-- Fin fila tema -->
+          </tbody><!-- Fin cuerpo tabla -->
+      </table><!-- Fin tabla principal -->
+  </div><!-- Fin dropdown -->
 
   <h2>Buscar Tema por ID</h2>
   <input type="number" #temaId placeholder="Ingrese ID del Tema">
   <button (click)="loadTemaById(+temaId.value)">Buscar</button>
 
   <div *ngIf="tema">
-    <h4>TEMA</h4>
-    nombre: {{ tema.nombre }} | ID: {{ tema.id }} | descripcion: {{ tema.descripcion }}
-    <h4>cursos donde se dicta:</h4>
-    <ul *ngFor="let curso of tema.cursos">
-      <span>id: {{ curso.id }}</span> |
-      <span>fecha de inicio: {{ curso.fechaInicio | date:'short' }}</span> |
-      <span>fecha de finalizacion: {{ curso.fechaFin | date:'short' }}</span>
-    </ul>
-  </div>
+      <table border="1" class="tabla_temas">
+          <thead>
+              <tr>
+                  <th>ID Tema</th>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Cursos donde se dicta</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>{{ tema.id }}</td>
+                  <td>{{ tema.nombre }}</td>
+                  <td>{{ tema.descripcion }}</td>
+                  <td><!-- Tabla para cursos donde se dicta -->
+                      <table class="table mb-0">
+                          <thead>
+                              <tr>
+                                  <th>ID Curso</th>
+                                  <th>Fecha de Inicio</th>
+                                  <th>Fecha de Finalización</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let curso of tema.cursos">
+                                  <td>{{ curso.id }}</td>
+                                  <td>{{ curso.fechaInicio | date:'short' }}</td>
+                                  <td>{{ curso.fechaFin | date:'short' }}</td>
+                              </tr><!-- Fin fila curso -->
+                          </tbody><!-- Fin cuerpo tabla de cursos -->
+                      </table><!-- Fin tabla de cursos -->
+                  </td><!-- Fin celda cursos -->
+              </tr><!-- Fin fila tema -->
+          </tbody><!-- Fin cuerpo tabla -->
+      </table><!-- Fin tabla principal -->
+  </div><!-- Fin div tema -->
 
   <h1>Registrar o Modificar Tema</h1>
 
