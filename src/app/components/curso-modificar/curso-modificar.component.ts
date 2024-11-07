@@ -21,9 +21,18 @@ export class CursoModificarComponent implements OnInit{
   docenteLegajo: number = 0;
   fechaInicio: Date = new Date();
   fechaFin: Date = new Date();
-  precio: number = 100;
+  precio: number = 0;
   mensaje: string = '';
   errorMessage: string = '';
+  /*variables adicionales para que funciones*/
+  cursoIdActualizar:number =0;
+  cursoIdCambiarDo:number=0;
+  cursoIdCambiarTe:number=0;
+  cursoIdEliminar:number =0;
+  /*variables para id doc y tem*/
+  docenteLegajoCambiar:number=0;
+  temaIdCambiar:number=0;
+
 
   constructor(private cursoService: CursoService) {}
   ngOnInit(): void {
@@ -57,7 +66,7 @@ export class CursoModificarComponent implements OnInit{
   }
 
   actualizarCurso(): void {
-    this.cursoService.actualizarCurso(this.cursoId, this.fechaInicio, this.fechaFin, this.precio).subscribe({
+    this.cursoService.actualizarCurso(this.cursoIdActualizar, this.fechaInicio, this.fechaFin, this.precio).subscribe({
       next: () => {
         this.mensaje = 'Curso actualizado exitosamente!';
         this.resetActualizarDatos();
@@ -71,7 +80,7 @@ export class CursoModificarComponent implements OnInit{
   cambiarDocente(): void {
     console.log("docente,componente antes del servicio ",this.docenteLegajo);
 
-    this.cursoService.cambiarDocente(this.cursoId, this.docenteLegajo).subscribe({
+    this.cursoService.cambiarDocente(this.cursoIdCambiarDo, this.docenteLegajoCambiar).subscribe({
       next: () => {
         this.mensaje = 'Docente cambiado exitosamente!';
         this.resetCambioDocenteTema();
@@ -83,14 +92,14 @@ export class CursoModificarComponent implements OnInit{
   }
 
   cambiarTema(): void {
-    console.log("tema,componente antes del servicio",this.temaId);
+    console.log("tema,componente antes del servicio",this.temaIdCambiar);
 
-    if (!this.cursoId || !this.temaId) {
+    if (!this.cursoIdCambiarTe || !this.temaIdCambiar) {
       this.errorMessage = 'Por favor, ingrese un ID de curso y un ID de tema válidos.';
       return;
     }
 
-    this.cursoService.cambiarTema(this.cursoId, this.temaId).subscribe({
+    this.cursoService.cambiarTema(this.cursoIdCambiarTe, this.temaIdCambiar).subscribe({
       next: () => {
         this.mensaje = 'Tema cambiado exitosamente!';
         this.resetCambioDocenteTema();
@@ -102,15 +111,15 @@ export class CursoModificarComponent implements OnInit{
   }
 
   eliminarCurso(): void {
-    if (!this.cursoId) {
+    if (!this.cursoIdEliminar) {
       this.errorMessage = 'Por favor, ingrese un ID de curso válido.';
       return;
     }
 
-    this.cursoService.eliminarCurso(this.cursoId).subscribe({
+    this.cursoService.eliminarCurso(this.cursoIdEliminar).subscribe({
       next: () => {
         this.mensaje = 'Curso eliminado exitosamente!';
-        this.cursoId = 0;
+        this.cursoIdEliminar = 0;
       },
       error: (error) => {
         this.errorMessage = 'Error al eliminar el curso. Detalles: ' + error.message;
@@ -133,8 +142,10 @@ export class CursoModificarComponent implements OnInit{
   }
 
   private resetCambioDocenteTema(): void {
-    this.cursoId = 0;
-    this.temaId = 0;
+    this.cursoIdCambiarDo = 0;
+    this.cursoIdCambiarTe =0;
+    this.temaIdCambiar = 0;
+    this.docenteLegajoCambiar=0;
     // Resetear mensaje si es necesario
     //this.mensaje = '';
   }

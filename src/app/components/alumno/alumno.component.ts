@@ -18,6 +18,7 @@ export class AlumnoComponent implements OnInit {
   errorMessage = '';
   mensaje = '';
   alumnoId = 0;
+  alumnoId1 = 0;
   cursoIds: string = ""; //<---
   isDropdownOpen = false;
   isDropdownCursoOpen = false;

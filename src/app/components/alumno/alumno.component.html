@@ -100,8 +100,9 @@
 
   <h2>Buscar y Registrar Alumno</h2>
 
+  <div>
   <form (ngSubmit)="guardarAlumno()">
-    <input type="number" [(ngModel)]="alumnoId" placeholder="ID del Alumno" name="alumnoId" required />
+    <input type="number" [(ngModel)]="alumnoId1" placeholder="ID del Alumno" name="alumnoId1" required />
 
     <input type="text" [(ngModel)]="nuevoAlumno.nombre" placeholder="Nombre del Alumno" name="nombre" required />
 
@@ -109,26 +110,56 @@
 
     <button type="submit">Guardar Alumno</button>
 
-    <button (click)="loadAlumnoById(alumnoId)">Buscar</button>
+    <button (click)="loadAlumnoById(alumnoId1)">Buscar</button>
 
-    <div *ngIf="mensaje">{{ mensaje }}</div>
+    <!--<div *ngIf="mensaje">{{ mensaje }}</div> cambio para evitar los mensajes-->
 
     <div *ngIf="alumno">
-      <h4>{{ alumno.nombre }} (ID: {{ alumno.id }})</h4>
-      <!-- Mostrar cursos del alumno -->
-      <ul class="cursos-alumno">
-        <li *ngFor="let curso of alumno.cursos" class="curso-alumno-item">
-          ID Curso: {{ curso.id }} | Precio Curso: usd${{ curso.precio }} |
-          Fecha Inicio: {{ curso.fechaInicio | date:'short' }} |
-          Fecha Fin: {{ curso.fechaFin | date:'short' }}
-        </li>
-      </ul>
-    </div>
+      <table border="1" class="tabla_alumnos">
+          <thead>
+              <tr>
+                  <th>Nombre</th>
+                  <th>ID</th>
+                  <th>Fecha de Nacimiento</th>
+                  <th>Cursos</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>{{ alumno.nombre }}</td>
+                  <td>{{ alumno.id }}</td>
+                  <td>{{ alumno.fechaNacimiento | date:'short' }}</td>
+                  <td><!-- Tabla para cursos del alumno -->
+                      <table class="table mb-0">
+                          <thead>
+                              <tr>
+                                  <th>ID Curso</th>
+                                  <th>Precio Curso</th>
+                                  <th>Fecha Inicio</th>
+                                  <th>Fecha Fin</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let curso of alumno.cursos">
+                                  <td>{{ curso.id }}</td>
+                                  <td>usd${{ curso.precio }}</td>
+                                  <td>{{ curso.fechaInicio | date:'short' }}</td>
+                                  <td>{{ curso.fechaFin | date:'short' }}</td>
+                              </tr><!-- Fin fila curso -->
+                          </tbody><!-- Fin cuerpo tabla de cursos -->
+                      </table><!-- Fin tabla de cursos -->
+                  </td><!-- Fin celda cursos -->
+              </tr><!-- Fin fila alumno -->
+          </tbody><!-- Fin cuerpo tabla -->
+      </table><!-- Fin tabla principal -->
+    </div><!-- Fin div alumno -->
   </form>
+  </div>
 
 
     <!-- Inscribir y eliminar -->
-    <h2>Inscribir o Eliminar Alumno</h2>
+  <h2>Inscribir o Eliminar Alumno</h2>
+  <div>
   <form>
 
     <!-- Campo para ingresar el ID del alumno -->
@@ -140,9 +171,10 @@
 
     <button (click)="eliminarAlumno()">Eliminar Alumno</button>
 
-    <div *ngIf="errorMessage">{{ errorMessage }}</div>
+    <!-- <div *ngIf="errorMessage">{{ errorMessage }}</div> -->
 
-   </form>
+  </form>
+  </div>
 
 
 </div>
